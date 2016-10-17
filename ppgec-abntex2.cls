@@ -35,13 +35,47 @@
 % Redefinição de fontes
 \renewcommand{\ABNTEXchapterfont}{\bfseries}
 
+\usepackage{color,calc,graphicx,soul,fourier}
+\definecolor{nicered}{rgb}{0,0,0}
+\makeatletter
+\newlength\dlf@normtxtw
+\setlength\dlf@normtxtw{\textwidth}
+\def\myhelvetfont{\def\sfdefault{mdput}}
+\newsavebox{\feline@chapter}
+\newcommand\feline@chapter@marker[1][4cm]{%
+\sbox\feline@chapter{%
+\resizebox{!}{#1}{\fboxsep=1pt%
+\colorbox{nicered}{\color{white}\bfseries\sffamily\thechapter}%
+}}%
+\rotatebox{90}{%
+\resizebox{%
+\heightof{\usebox{\feline@chapter}}+\depthof{\usebox{\feline@chapter}}}%
+{!}{\scshape\so\@chapapp}}\quad%
+\raisebox{\depthof{\usebox{\feline@chapter}}}{\usebox{\feline@chapter}}%
+}
+\newcommand\feline@chm[1][4cm]{%
+\sbox\feline@chapter{\feline@chapter@marker[#1]}%
+\makebox[0pt][l]{% aka \rlap
+\makebox[1cm][r]{\usebox\feline@chapter}%
+}}
+\makechapterstyle{daleif1}{
+\renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
+
+\renewcommand\chapternamenum{}
+\renewcommand\printchaptername{}
+\renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par}
+\renewcommand\afterchapternum{\par\vskip\midchapskip}
+\renewcommand\printchaptertitle[1]{\chaptitlefont\sffamily ##1\par}
+}
+
+
 % Estilo de capítulo sem ser o do abntex
-\chapterstyle{default}
+\chapterstyle{daleif1}
 
 
 
 % Faz com que as notas de rodapé parem de resetar após novos capítulos
-\counterwithout{footnote}{chapter}	
+\counterwithout{footnote}{chapter}
 
 % Redefinição de nome de elementos pré-textuais
 \addto\captionsbrazil{% portugues-brasil
@@ -62,7 +96,6 @@
 \addto\captionsenglish{% inglês
   %% ajusta nomes padroes do babel
   \renewcommand{\listadesiglasname}{List of symbols and abbreviations}
-  \renewcommand{\bibname}{References}
 }
 
 %%%% alterando a capa %%%%
@@ -83,9 +116,9 @@
   %  \ABNTEXchapterfont\bfseries\LARGE\imprimirtitulo
     \begin{SingleSpace} \Huge\imprimirtitulo \end{SingleSpace}
     \vspace*{3.3cm}
-    
+
     \normalsize\imprimirtipotrabalho
-    
+
 	\vfill
 
     \normalsize\imprimirlocal, \imprimirdata
@@ -133,7 +166,7 @@
 \vspace*{-0.5cm}
 \begin{flushright}
 \SingleSpacing
-\normalsize\imprimirorientador \\ 
+\normalsize\imprimirorientador \\
 Orientador
 
 \abntex@ifnotempty{\imprimircoorientador}{%
