@@ -36,7 +36,7 @@
 \renewcommand{\ABNTEXchapterfont}{\bfseries}
 
 \usepackage{color,calc,graphicx,soul,fourier}
-\definecolor{nicered}{rgb}{0,0,0}
+\definecolor{nicered}{rgb}{0.5,0.5,0.5}
 \makeatletter
 \newlength\dlf@normtxtw
 \setlength\dlf@normtxtw{\textwidth}
@@ -56,14 +56,14 @@
 \newcommand\feline@chm[1][4cm]{%
 \sbox\feline@chapter{\feline@chapter@marker[#1]}%
 \makebox[0pt][l]{% aka \rlap
-\makebox[1cm][r]{\usebox\feline@chapter}%
+\makebox[3.5cm][r]{\usebox\feline@chapter}%
 }}
 \makechapterstyle{daleif1}{
 \renewcommand\chapnamefont{\normalfont\Large\scshape\raggedleft\so}
 
 \renewcommand\chapternamenum{}
 \renewcommand\printchaptername{}
-\renewcommand\printchapternum{\null\hfill\feline@chm[2.5cm]\par}
+\renewcommand\printchapternum{\null\feline@chm[3.0cm]\par}
 \renewcommand\afterchapternum{\par\vskip\midchapskip}
 \renewcommand\printchaptertitle[1]{\chaptitlefont\sffamily ##1\par}
 }
