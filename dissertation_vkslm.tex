@@ -58,6 +58,13 @@
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
+
+% Used to jump to image instead of caption
+\usepackage[all]{hypcap}
+\usepackage{subfig}
+
+\newcommand{\boldm}[1] {\mathversion{bold}#1\mathversion{normal}}
+
 % ---
 % used for smart inline list
 \usepackage{enumitem}
@@ -65,10 +72,19 @@
   label=\arabic*.,
 }
 
+% Magic to ignore citations in captions in list of figures when numbering
+\usepackage{notoccite}
+
+\usepackage{multirow}
+
+
 \newlist{inlinelist}{enumerate*}{1}
 \setlist*[inlinelist,1]{%
   label=(\roman*),
 }
+ 
+\graphicspath{{images/}}
+
 % ---
 % Pacotes adicionais, usados apenas no âmbito do Modelo Canônico do abnteX2
 % ---
@@ -78,7 +94,7 @@
 % ---
 % Pacotes de citações
 % ---
-\usepackage[num]{abntex2cite}	% Citações padrão ABNT
+\usepackage[num,abnt-etal-list=0]{abntex2cite}
 \citebrackets[]
 % hack para colocar colchetes nas referencias.
 \makeatletter
@@ -313,13 +329,13 @@
 %\pagestyle{simple}
 %\aliaspagestyle{chapter}{simple}
 
-\include{conteudo/introduction}
-\include{conteudo/signature_verification}
-\include{conteudo/generative_models}
-\include{conteudo/dynamic}
-\include{conteudo/duplicated}
-\include{conteudo/results}
-\include{conteudo/conclusion}
+\include{conteudo/ch1}
+\include{conteudo/ch3}
+\include{conteudo/ch2}
+\include{conteudo/ch4}
+\include{conteudo/ch5}
+\include{conteudo/ch6}
+\include{conteudo/ch7}
 % ----------------------------------------------------------
 % ELEMENTOS PÓS-TEXTUAIS
 % ----------------------------------------------------------
@@ -329,7 +345,7 @@
 % ----------------------------------------------------------
 % Referências bibliográficas
 % ----------------------------------------------------------
-\bibliography{referencias}
+\bibliography{library}
 % ----------------------------------------------------------
 % Glossário
 % ----------------------------------------------------------

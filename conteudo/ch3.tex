@@ -1,0 +1,140 @@
+%!TEX root = ../dissertation_vkslm.tex
+
+\chapter{Handwritten Signature Verification} \label{ch:bg}
+In this chapter, we introduce some essential concepts related to Handwritten Signature Verification systems used in this work. First, we give an introduction and a general overview of the handwritten signature biometry, then we discuss how an Automatic Handwritten Signature Verification system works and finally we give a brief overview of the state-of-the-art on off-line signature synthesis based on on-line data.
+
+\section{Handwritten Signature: a behavioral biometry}
+
+The term ``Biometrics'' is derived from the Greek word ``bio-metriks''. In which ``bio'' means ``life'' and ``metrics'' means ``to measure''. Biometrics refers to the measurements and statistical analysis of unchanging biological characteristics peculiar to an individual. Biometric systems are
+a constantly growing technology \cite{jain2004biometrics} and have been introduced as forms of identification and access control. Biometric identifiers are a unique measurable characteristic used to distinguish and describe individuals \cite{jain2000biometric}. 
+
+Biometric systems are often categorized as physiological or behavioral \cite{ross2008introduction}. The physiological category is related to measurements of the body. Examples include fingerprint, palm veins, face recognition, DNA, palm print, hand geometry, iris/retina pattern, and body scent, while behavioral characteristics are acquired traits by an individual and are related to the pattern of behavior of a person. They include typing rhythm, gait, temperament, voice, and handwritten signatures \cite{jain2016}.
+
+Most biometric identifiers require a special type of device for security and control of human identity. However, handwritten signature based biometric systems can be realized requiring no sensor except a pen and a piece of paper. According to \cite{uppalapati2007integration} handwritten signatures are considered the most legal and social attributes for person identification. Nevertheless, the challenge that comes with automatic signature-based authentication is the need for high accuracy results to avoid false authorization or rejection.
+
+Handwritten signature authentication is based on systems for signature verification. 
+Whether a given signature belongs to a claimed person or not is decided through a signature verification system, which ultimately strives to learn the manner in which
+an individual makes use of their muscular memory (hands,
+fingers and wrist) to reproduce a signature \cite{gupta1997review}. 
+
+A generic handwritten signature based biometric system is shown in Figure \ref{fig_ahsv-overview}. Once the user {\boldm $Y$} deposits the signature, a sensor digitalizes the sample. Later, a feature matrix {\boldm $X$} is built with the information extracted from the input sample. Next, the systems typically have two stages: enrollment {\boldm $X_{E}$} and recognition {\boldm $X_{R}$}. The former builds a system database {\boldm $D$} where the users store their reference signatures as a set of templates, whereas the latter is
+used to recognize, identify or verify the identity of a user, who typically claim to be one of the registered users. Then, a score {\boldm $S$} is obtained according to the similarity of the
+questioned sample to the claimed template. Finally, the system accepts or rejects the questioned sample.
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=6.5in]{biometry-overview}
+\caption{Overview of a typical handwritten signature based system. Figure adapted from \cite{jain2016}.}
+\label{fig_ahsv-overview}
+\end{figure}
+
+As Figure \ref{fig_ahsv-overview} shows, the signature acquisition sensor can be either an optical scanner or an acquisition device such as a digitizing tablet. These two different acquisition tools characterizes the two classes of signatures, namely: static and dynamic. 
+
+In the static modality, also referred to as off-line, an optical scanner is used to obtain the signature directly from the pen on the paper and only the digital image of the signature is available, see Figure \ref{fig:acquisition} (a). In the dynamic mode, also called on-line, signatures are acquired by means of a graphic tablet or a pen-sensitive computer display, see Figure \ref{fig:acquisition} (b). In this mode, data is stored during the writing process and consists of a temporal sequence of the two-dimensional coordinates $(x, y)$ of consecutive points. 
+
+An example of a colored off-line signature and a plotted matching on-line signature can be found in Figure \ref{fig:offon}. Specifically, what characterizes both domains is that the on-line singatures do not convey information about the overall shape of the signature, the width of the strokes and the texture of the ink on the paper \cite{diaz2014generation}, whereas the off-line representation has lost all dynamic information about the manner in which
+the signature is signed during the acquisition process. As a result, features such as pen trajectory, which can be easily computed in the on-line domain, can only be inferred from a static image \cite{nel2005estimating}.
+
+
+\begin{figure}[!htpb]
+\centering
+ \subfloat[]{\includegraphics[width=3.0in]{signature.PNG}} 
+\hspace*{0.5in} % separation between the subfigures
+\subfloat[] {\includegraphics[width=2.5in]{stu500.jpg}}
+\caption{Different signature acquisition methods. (a) a signature scanned from paper and (b) digitizing tablet Wacom STU-500 \cite{wacom2016}. } \label{fig:acquisition}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=3.5in]{offon}
+\caption{An off-line and a matching on-line signature sample. Figure extracted from \cite{sigcomp2009}.}
+\label{fig:offon}
+\end{figure}
+
+%O pré-processamento tem como objetivos principais a correção de distorções
+%geométricas na imagem e a remoção de ruídos, bem como a segmentação que é o
+%processo de divisão da assinatura em múltiplas partes. É usualmente utilizada para
+%identificar objetos ou outras informações relevantes em representações digitais.
+%
+%Na fase de classificação, os dados obtidos na extração devem ser utilizados para
+%distinguir de forma inteligente entre assinaturas verdadeiras e falsas. Para este fim,
+%existem diversas técnicas consagradas, como exemplo podemos citar as Redes Neurais
+%Artificiais, HMM, SVM, DTW, entre outros. Além disso, modelos híbridos (junção de
+%duas ou mais técnicas) poderão ser investigados para este objetivo.
+
+Once the signature sample is acquired, during the enrollment phase the system tries to create the subject identity based on behavioral features in the signature. Because of the way we sign, however, it is a subtle task. The rapid movement behind the signature creation is determined by a motor program stored in the brain of each signer applied to tools such as pen and paper \cite{pirlo2014advances}. According to \cite{plamondon1989automatic} the handwritten signatures can be influenced by country, age, time, habits, acquisition tool, psychological or  emotional state, creating a significant variability that must be taken into account in the authentication process.
+
+In fact, the unpredictable intra-personal variability, i.e. the similarity between signatures executed by the same writer, is a crucial challenge of signature-based biometric systems. This variability can be attributed to the several sources of noise ($\eta$) that distort the measured trait. According to Figure \ref{fig_ahsv-overview}, the intra-personal variability which affects the measured sample {\boldm $M$} can be characterized by: sensor limitations like resolution or sample rate; biological aging effects or cognitive-motor impairments; user interaction with the sensor; environment changes like background noise and; other factors as consequence of the individuals’ mood, hurry or unwillingness to cooperate. This effect is illustrated in Figure \ref{fig:intraclass}.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[width=4.5in]{superimposed}
+\caption{Superimposed genuine signatures of the same writer. A high intra-class variability can be noticed. Extracted from \cite{hafemann2015offline}. }
+\label{fig:intraclass}
+\end{figure}
+
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=6.5in]{forgeries}
+\caption[The first column signatures are genuine references, the following three samples are questioned signatures. How many forgeries would you be able to detect? Signatures extracted from \cite{mcyt-100}.]{The first column signatures are genuine references, the following three samples are questioned signatures. How many forgeries would you be able to detect?\protect\footnotemark Signatures extracted from \cite{mcyt-100}.} 
+\label{fig_forgeries}
+
+\end{figure}
+\footnotetext{From left to right, top to bottom (F means Forgery and G means Genuine): FGF FFG GFF}
+
+Another challenge faced by signature-based biometric systems is the unpredictable inter-personal variability, i.e. the similarity between signatures executed by different writers. In a signature-based system, inter-personal variability is mainly attributed to frauds related to malicious people faking the identity of signers. In the field of signature verification forgeries are generally classified in two different types of forgeries. 
+\begin{itemize}
+\item The first one is the random forgery which is created in a situation which an impostor who has no information about the person or the shape of the original signature tries to verify the identity of a signer by using his own genuine signature. The random forgery test is a typical test used in access control and commercial transactions. 
+
+\item The second type is the skilled forgery, represented by a proper imitation of the genuine signature model. The forger has access for both the user’s name and signature, and  learns the signature of a signer and tries to reproduce it with a similar intra-class variability. This test is the most relevant in signature verification for its impact in forensic applications in signature forgery detection. Figure \ref{fig_forgeries} illustrates a visual comparison between genuine signatures and skilled forgeries.
+ 
+\end{itemize}
+
+
+
+\section{Automatic Handwritten Signature Verification}
+An Automatic Handwritten Signature Verification System (AHSVS) is essentially a pattern recognition application. Pattern recognition is one of the most important and active fields of research. During the past few decades, there has been a considerable growth of interest in problems of pattern recognition, and in the last few years, many methods have been developed in this area. 
+
+As any Pattern Recognition system, an AHSVS has three phases: data acquisition and pre-processing, feature extraction and classification \cite{impedovo2008state}. In the first step, the signatures are acquired and preprocessed, the main goal here is to correct geometric distortions and remove noise related to the signature acquisition sensor. After the images are acquired and treated, features are extracted and stored in a knowledge database. On the classification step, the extracted features are used to distinguish between genuine and forged signatures. Therefore the Signature Verification task is, in essence, a two-class classification problem, in which the system's prediction to the input signature sample is either genuine or fraud.
+
+Verification errors occurring in AHSVS are usually categorized as two types \cite{fairhurst1997signature}. On the one hand, a genuine signer may be rejected by the system as a potential impostor (e.g. it could happen when the signer carelessly executes his/her signature), resulting in what is denoted a Type-1 error or False
+Rejection. On the other hand, a skilled forger might be able to produce a sample which would be accepted as genuine, resulting in what is called a Type-2 error or False Acceptance. 
+
+Therefore, AHSVS efficiency is quantitatively measured by two rates: False Rejection Rate (FRR) which is the percentage of genuine signatures treated as forgeries, and False
+Acceptance Rate (FAR) which is the percentage of forged signatures treated as
+genuine. A derived metric that is usually used is the Average Error rate (AER) which is the average of FAR and FRR. Moreover, when experimenting an AHSVS, the trade-off between FRR and FAR must be taken into account based on the type of application and other aspects related to where the system is used. When the decision threshold of a system is set to have the FRR approximately equal to the FAR, the Equal Error Rate (EER) is calculated.
+
+In order to improve the performance of signature verification
+systems, bigger databases are required. The amount of data available for each user is often
+insufficient in real applications. During the enrollment phase,
+users are often required to supply only a few samples of their
+signatures. In other words, even if there is a significant number
+of users enrolled in the system, a classifier needs to perform
+well for a new user, for whom only a small set of samples are
+available. Since the acquisition
+and distribution of real signatures arise legal and privacy
+concerns, the use of realistic synthetic signatures could be
+regarded as a good alternative. 
+
+\section{Off-line Signature Synthesis Using On-line Samples}
+TODO - quero colocar aqui uma visão geral das propostas existentes do estado da arte
+
+assessment \cite{guest2013assessment}
+
+rabasse 2008 \cite{rabasse2008new}
+
+ferrer synthetic online to synthetic offline \cite{ferrer2013realistic}
+
+\cite{diaz2014generation}
+
+\cite{diaz2014cognitive}
+
+%There are proposals in the literature focused on the generation of signature
+%images from on-line signatures (Ferrer et al., 2013b; Guest et al., 2014; Rabasse et al.,
+%2008). The common tendency is to apply different methods to dynamic signatures since
+%these record the kinematic and the timing order in which the traces were registered.
+%Once a new trajectory is obtained, the samples of the new specimen are interpolated in
+%order to create new images. Then, an off-line automatic classifier is used to assess the
+%performance improvement. Parallel to this approach, a method of generating enhanced
+%synthetic signatures images has been formulated using a novel architecture to improve
+%the performance of dynamic verifiers (Galbally et al., 2015).
