@@ -11,43 +11,60 @@ As a behavioral trait, signatures present a high intra-user variability and are 
 
 If a signature on a document is forged, this document is also considered invalid. Thus, preventing frauds in the signature verification process has been a challenge for researchers around the world. However, manual signature-based authentication of a large set of documents is a time-consuming and labor-intensive task. Hence, several Automatic Handwritten Signature Verification Systems (AHSVS) have been proposed to support this task. These systems aim to automatically decide if a query signature is in fact of a particular person or not.
 
-An AHSVS is essentially a pattern recognition system that receives a signature as input, extracts a feature set from the data and classifies the sample using a template database as the reference. These datasets contain signatures digitized either by using an optical scanner to obtain the signature directly from the paper or using an acquisition device such as digitizing tablets or electronic pens with digital ink. The two domains are identified as off-line (static) and on-line (dynamic), respectively.  In the on-line modality, data is stored during the writing process and consists of a temporal sequence of the two-dimensional coordinates (x, y) of consecutive points, whereas in the off-line case, only a static representation of the completed writing is available as an image. Moreover, each representation has specific attributes not present in the other \cite{viard1999ireste}. 
+An AHSVS is essentially a pattern recognition system that receives a signature as input, extracts a feature set from the data and classifies the sample using a template database as the reference. These datasets contain signatures digitized either by using an optical scanner to obtain the signature directly from the paper or using an acquisition device such as digitizing tablets or electronic pens with digital ink. The two domains are identified as offline (static) and online (dynamic), respectively.  In the online modality, data is stored during the writing process and consists of a temporal sequence of the two-dimensional coordinates (x, y) of consecutive points, whereas in the offline case, only a static representation of the completed writing is available as an image. Moreover, each representation has specific attributes not present in the other \cite{viard1999ireste}. 
 
-In order to improve the performance of signature verification systems, bigger databases are required. Since the acquisition and distribution of real signatures arise legal and privacy concerns, the use of realistic synthetic signatures could be regarded as a good alternative. As a consequence, over the last years, several works on both on-line \cite{galbally2009synthetic}, \cite{galbally2012synthetic} and off-line \cite{ferrer2013synthetic}, \cite{ferrer2013realistic} signature synthesis have been carried out. These synthetically generated signatures show a similar behavior to real ones, thus enabling to enlarge existing databases and offering new possibilities for off-line recognition.
+In order to improve the performance of signature verification systems, bigger databases are required. Since the acquisition and distribution of real signatures arise legal and privacy concerns, the use of realistic synthetic signatures could be regarded as a good alternative. As a consequence, over the last years, several works on both online \cite{galbally2009synthetic, galbally2012synthetic} and offline \cite{ferrer2013synthetic, ferrer2013realistic} signature synthesis have been carried out. These synthetically generated signatures show a similar behavior to real ones, thus enabling to enlarge existing databases and offering new possibilities for offline recognition.
+
+The increasing use of portable personal devices capable
+of capturing on-line signature signals (e.g, Tablet PCs, PDAs,
+mobile telephones, etc) is producing a growing demand of
+person authentication applications based on signature signals.
+But in spite of its advantages, there are cases in which on-
+line signature verification is not yet commonly used because
+signatures are collected off-line. This is the case of many gov-
+ernment/legal/financial transactions that are performed daily.
+Also, off-line signature examination is the common type of
+criminal casework for forensic experts worldwide [7]. Fur-
+thermore, systems that combine both on- and off-line infor-
+mation are of interest in new scenarios where signatures are
+collected on a paper attached to a digitizing tablet (e.g. point-
+of-sale terminals).
+
+
+There may be a case where the type of signature verification system used for training differs from that used for testing purpose. Though the test sample is of a genuine person, it might not be possible to prove with either of these systems alone. Hence, development of an integrated version of offline and online signature verification systems would be useful, either or both the offline and the online signature templates of the person being registered are recorded and an identification number is generated for that person. During testing, the test sample recorded is matched against the information available for that identification number in the database \cite{uppalapati2007integration}.
 
 Some efforts have been performed on the generation of synthetic static data taking into account dynamic features during the synthesis process \cite{diaz2014generation}. Among others, this type of synthesis approach presents the following possible practical applications:
 \begin{inlinelist}
-  \item generation of synthetic static samples to be fused with the original on-line signatures in order to improve the performance in an on-line verification scenario;
-  \item enlarge existing off-line signature databases;
-  \item development of systems capable of integrating both on-line and off-line samples interchangeably, towards a unified signature biometry.
+  \item generation of synthetic static samples to be fused with the original online signatures in order to improve the performance in an online verification scenario;
+  \item enlarge existing offline signature databases;
+  \item development of systems capable of integrating both online and offline samples interchangeably, towards a unified signature biometry \cite{chapter}.
 \end{inlinelist}
 
-Despite the advancements for this category of synthesis, the synthetic off-line samples created with the state-of-the-art systems still struggle to improve the recognition rates when used to enlarge existing off-line signature databases.
+Despite the advancements for this category of synthesis, the synthetic offline samples created with the state-of-the-art systems still struggle to improve the recognition rates when used to enlarge existing offline signature databases.
 
-In this work, we propose an approach based on Fully Convolutional Neural Networks (FCN) trained in a supervised manner, to learn the representation of off-line manuscripts using as the input the on-line representation, expecting that the network predicts the corresponding static sample. This type of approach is interesting for our problem since the neural network learns how the dynamic features, in particular, the pressure, of the on-line representation of the manuscript translates into the static domain (pen on the paper). 
 
-In contrast to the models proposed in the literature \cite{ferrer2013synthetic}, \cite{ferrer2013realistic}, \cite{diaz2014generation}, the approach proposed in this work is designed under the perspective of supervised training. In which a learning model is trained to perform the task of ``on-line to off-line conversion'' using as the training data a data set containing both the on-line and off-line versions of manuscripts. We expect that the Deep Neural Network model can learn how on-line information is transformed into the off-line manuscript. Moreover, we expect that the trained model synthesizes off-line signatures with improved discriminative power (i.e., better recognition rates). 
+In this work, we propose an approach based on Fully Convolutional Neural Networks (FCN) trained in a supervised manner, to learn the representation of offline manuscripts using as the input the online representation, expecting that the network predicts the corresponding static sample. This type of approach is interesting for our problem since the neural network learns how the dynamic features, in particular, the pressure, of the online representation of the manuscript translates into the static domain (pen on the paper). 
+
+In contrast to the models proposed in the literature \cite{ferrer2013synthetic, ferrer2013realistic, diaz2014generation}, the approach proposed in this work is designed under the perspective of supervised training. In which a learning model is trained to perform the task of ``online to offline conversion'' using as the training data a data set containing both the online and offline versions of manuscripts. We expect that the Deep Neural Network model can learn how online information is transformed into the offline manuscript. Moreover, we expect that the trained model synthesizes offline signatures with improved discriminative power (i.e., better recognition rates). 
 
 \section{Problem statment}
 Encouraged by the motivations depicted previously the goal of this dissertation can be stated as follows:
 
-\textit{"The goal of this work is to design an approach to generate synthetic off-line handwriting signatures based on on-line data for biometric purposes, modeling this problem as a supervised machine learning task, using a Deep Convolutional Neural Network."}
+\textit{"The goal of this work is to design an approach to generate synthetic offline handwriting signatures based on online data, modeling this problem as a supervised machine learning task, through a Deep Convolutional Neural Network, in order to enlarge offline signature datasets to improve offline signature verification systems recognition rates."}
 
 This statement is developed through the following actions:
 \begin{inlinelist}
-\item Creation and training of a Deep Neural Network model able to translate dynamic handwritten information into an off-line manuscript
-\item Generation of an off-line synthetic dataset based on a publicly available on-line signature dataset
+\item Creation and training of a Deep Neural Network model able to translate dynamic handwritten information into an offline manuscript
+\item Generation of an offline synthetic dataset based on a publicly available online signature dataset
 \item Compare the proposed approach’s performance with state-of-the-art methods and to evaluate the closeness of synthetic signatures with respect to real signatures. 
 \end{inlinelist}
 
-To achieve the point (iii), machine-oriented validations are carried out. A state-of-the-art automatic signature verifier is used with publicly available signature databases and our synthetic specimens. It is expected that similar results will be obtained with both kinds of signatures. Moreover, we also evaluate the use of synthetic signatures in the enrollment set analyzing the improvements in the system performance. 
+To achieve point (iii), machine-oriented validations are carried out. A state-of-the-art automatic signature verifier is used to evaluate our synthetic samples versus real offline signatures from a publicly available dataset. It is expected that similar results would be obtained with both the real and our proposed method synthetic signatures. Moreover, we also evaluate the use of synthetic signatures in the genuine enrollment set, analyzing the differences on the offline verification system recognition rates. 
 
 \section{Dissertation structure}
 From this introduction, the remainder of this work is organized as follows:
 
-\textbf{TODO}
-Chapter \ref{ch:bg} presents the theoretical background about the main topics around this
-study: automatic handwritten signature verification, synthetic signature generation from on-line data and previous studies performed in this context and describe the concept of Deep Learning. Chapter \ref{ch:method} describes our proposed method. Chapter \ref{ch:exp} presents the experimental protocol and results. Finally, in Chapter \ref{ch:conclusion} conclusions of this study are presented together with suggestions for future work.
+Chapter \ref{ch:bg} gives an overview on the topic of handwritten signature verification. We introduce handwritten signatures as a biometry trait, characterize how an automatic handwritten signature verification system works and summarize previous studies performed in the context of synthetic offline signatures from online data. In Chapter \ref{ch:nndl}, we give a context and describe the concept of Deep Learning. Chapter \ref{ch:method} describes our proposed method. Chapter \ref{ch:exp} presents the experimental protocol and Chapter \ref{ch:results} the results. Finally, in Chapter \ref{ch:conclusion} we present the conclusion of this study together with suggestions for future work.
 
 
 

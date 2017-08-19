@@ -50,7 +50,7 @@
 % ---
 % Pacotes básicos
 % ---
-\usepackage{times}			    % Usa a fonte Times New Roman
+\usepackage{times}			    % Usa a fonte Times New n
 \usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
 \usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
 \usepackage{lastpage}			% Usado pela Ficha catalográfica
@@ -58,6 +58,7 @@
 \usepackage{color}				% Controle das cores
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
+\usepackage{amsmath}
 
 % Used to jump to image instead of caption
 \usepackage[all]{hypcap}
@@ -69,7 +70,7 @@
 % used for smart inline list
 \usepackage{enumitem}
 \setlist[enumerate,1]{%
-  label=\arabic*.,
+  label=\*.,
 }
 
 % Magic to ignore citations in captions in list of figures when numbering
@@ -187,18 +188,22 @@
 % ---
 % Ajusta a marca \textual para que a numeração volte a ser arábica
 % nos elementos textuais
-\let\oldtextual\textual        % copia o comando \textual anterior para \oldtextual
-\renewcommand{\textual}{%
-  \oldtextual%
-  \pagenumbering{arabic} % volta à numeração arábica
-}
-% ---
+%\let\oldtextual\textual        % copia o comando \textual anterior para \oldtextual
+%\renewcommand{\textual}{%
+%  \oldtextual%
+%  \cleardoublepage
+%
+%
+%%  \pagenumbering{arabic} % volta à numeração arábica
+%}
+%% ---
 
 
 
 % ----
 % Início do documento
 % ----
+\newcounter{savepage}
 \begin{document}
 
 % Seleciona o idioma do documento (conforme pacotes do babel)
@@ -266,7 +271,10 @@
 \include{pretextuais/dedicatoria}
 
 % ---
-
+% Agradecimentos
+% ---
+\include{pretextuais/agradecimentos}
+% ---
 % ---
 % Epígrafe
 % ---
@@ -315,17 +323,18 @@
 
 
 
-% ---
-% Agradecimentos
-% ---
-\include{pretextuais/agradecimentos}
-% ---
 
+
+\cleardoublepage
+\setcounter{savepage}{\arabic{page}}
 
 % ----------------------------------------------------------
 % ELEMENTOS TEXTUAIS
 % ----------------------------------------------------------
+\pagenumbering{arabic}
+\setcounter{page}{\thesavepage}
 \textual
+
 %\pagestyle{simple}
 %\aliaspagestyle{chapter}{simple}
 
@@ -357,7 +366,7 @@
 % ---
 % Apêndices e Anexos
 % ---
-%\include{postextuais/apendices}
+\include{postextuais/apendices}
 %\include{postextuais/anexos}
 
 

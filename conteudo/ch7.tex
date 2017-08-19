@@ -1,12 +1,21 @@
 %!TEX root = ../dissertation_vkslm.tex
 
-\chapter{Conclusion and Future Works}
-
+\chapter{Conclusion and Future Works}\label{ch:conclusion}
 
 A novel method to synthesize off-line signatures
-from dynamic information has been proposed. We describe our Neural Network approach that learns how to transform on-line manuscripts into static samples taking advantage of the data present in the IRONOFF dataset. 
+from dynamic information has been proposed. We describe our Neural Network approach that learns how to transform online manuscripts into static samples taking advantage of the data present in the IRONOFF dataset during the training phase of Neural Network. 
 
-We observe that our proposed synthetic images offer better performance when compared to the state of the art and similar performance to real signatures. We show that the synthetic signatures present high discriminative power when used to increase the enrollment set under the skilled forgeries scenario, one of the biggest challenges in handwriting recognition. 
+We observe that our proposed synthetic images offer better performance when compared to the state-of-the-art and comparable performance to real signatures. We show that the synthetic signatures present high discriminative power when used to increase the enrollment set under the skilled forgeries scenario, one of the biggest challenges in signature verification. 
 
-We intend to explore in future works the combination of real on-line and
-synthetically generated off-line signatures from our method, when only the on-line information is available, towards improved recognition results.
+We intend to explore in future works the combination of real online and
+synthetically generated offline signatures from our method, when only the online information is available, towards improved recognition results.
+
+In this paper, we show that it is possible to model the "online to offline signature" conversion as a learning task.
+ 
+Our Deep Neural Network model learns how the online biometric data must be used to build the grayscale signature image.
+ 
+The proposed system can be combined with any other offline signature system and is a writer independent approach.
+ 
+The proposed method synthesizes offline signatures comparable to real signatures.
+ 
+Our synthetic signatures can be used to increase the enrollment set, leading to improved EER, inclusive to skilled forgeries. 

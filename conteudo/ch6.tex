@@ -1,6 +1,6 @@
 %!TEX root = ../dissertation_vkslm.tex
 
-\chapter{Experiments Result}
+\chapter{Results} \label{ch:results}
 
 As described in Chapter \ref{ch:exp}, two different experiments are
 carried out in order to analyze the quality of the synthetic
@@ -10,15 +10,22 @@ enrollment set samples. The goal of the experiments is threefold, namely:
   \item measure the similarity between real
   and synthetic images
   \item assess whether using synthetic
-  signatures affects the recognition performance
+  signatures affects an offline signature verification system recognition performance
   \item analyze the feasibility of using real and synthetic signatures
   on the enrollment set
 \end{inlinelist}.
 
-We compare our results with the state of the art, specifically the the approach proposed by Diaz \cite{diaz2014generation}. Our proposed method is compared with the ``Image enhanced'' synthetic signatures made available as part of the BiosecurID \cite{biosecurid} dataset. The reported EER is achieved for both approaches on the same experimental conditions.
+We compare our results with the state-of-the-art, particularly the approach proposed by Diaz \cite{diaz2014generation}. Specifically, our proposed method is compared with the ``Image enhanced'' synthetic signatures made available as part of the BiosecurID \cite{biosecurid} dataset. The reported EER is achieved for both approaches on the same experimental conditions.
 
-\section{Experiment 1}
-In order to evaluate the performance of the synthetic signature signatures described in Sect. II and the state of the art, two different protocols are followed: 
+The recognition rates of three types of offline signatures are reported: 
+\begin{inlinelist}
+  \item real offline signatures, which are the corresponding real offline samples of the online signatures used to generate the synthetic samples, they serve us as a ground-truth, i.e. the ideal synthetic signature should be similar to it
+  \item synthetic signatures generated with the method proposed by Diaz \cite{diaz2014generation}
+  \item our proposed method synthetic signatures
+\end{inlinelist}.
+
+\section{Synthetic signatures in comparison to real signatures - Experiment 1}
+In order to evaluate the performance of the synthetic signature signatures described in Chapter \ref{ch:method} and the state-of-the-art, two different protocols are followed: 
 \begin{itemize}
 \item mono-session: signatures from the first session on the enrollment set
 \item multi-session: one signature per session.
@@ -30,7 +37,7 @@ In order to evaluate the performance of the synthetic signature signatures descr
 \renewcommand{\arraystretch}{1.3}
 % if using array.sty, it might be a good idea to tweak the value of
 % \extrarowheight as needed to properly center the text within the cells
-\caption{EER for real, synthetic samples from Diaz \cite{diaz2014generation} and our proposed method synthetic off-line signatures, for all the approaches considered under the two possible scenarios (i.e., random and skilled forgeries)}
+\caption{EER for real, synthetic samples from Diaz \cite{diaz2014generation} and our proposed method synthetic offline signatures, for all the approaches considered under the two possible scenarios (i.e., random and skilled forgeries)}
 \label{exp1_results_table}
 \centering
 %% Some packages, such as MDW tools, offer better commands for making tables
@@ -58,13 +65,21 @@ are very close. On the other hand we observe that under the skilled forgeries ou
 In Figure \ref{exp1} (left - mono-session, right - multi-session) we
 may observe that the behaviour of the system with real (gray dotted) and our proposed method synthetic signatures is quite similar, regardless of
 the training protocol or the scenario considered. Nevertheless, our proposed method synthetic samples show a bigger discriminative power for skilled forgeries.
-
+\begin{figure*}[!htb]
+	\centering
+	\includegraphics[width=1.05\textwidth]{rocs/experiment1}
+	% where an .eps filename suffix will be assumed under latex, 
+	% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+	% via \DeclareGraphicsExtensions.
+	\caption{DET curves for real offline signatures and synthetic signatures (from Diaz and our proposed method), for the first experiment (mono-session and multi-session enrollment), for the two scenarios considered (random and skilled impostors)}
+	\label{exp1}
+\end{figure*}
 \begin{table}[!htb]
 	%% increase table row spacing, adjust to taste
 	\renewcommand{\arraystretch}{1.3}
 	% if using array.sty, it might be a good idea to tweak the value of
 	% \extrarowheight as needed to properly center the text within the cells
-	\caption{EER for real, synthetic samples from Diaz \cite{diaz2014generation} and our proposed method synthetic off-line signatures for the Experiment 2 under the two possible scenarios, i.e., random (RF) and skilled forgeries (SF)}
+	\caption{EER for real, synthetic samples from Diaz \cite{diaz2014generation} and our proposed method synthetic offline signatures for the Experiment 2 under the two possible scenarios, i.e., random (RF) and skilled forgeries (SF)}
 	\label{exp2_results_table}
 	\centering
 	%% Some packages, such as MDW tools, offer better commands for making tables
@@ -79,27 +94,56 @@ the training protocol or the scenario considered. Nevertheless, our proposed met
 	\end{tabular}
 
 \end{table}
-\begin{figure}[!htb]
-	\centering
-	\label{exp2}
-	\includegraphics[width=5.0in]{rocs/experiment2}
-	% where an .eps filename suffix will be assumed under latex, 
-	% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-	% via \DeclareGraphicsExtensions.
-	\caption{DET curves for real off-line signatures and synthetic signatures (from Diaz and our proposed method), for the second experiment, for the two scenarios considered (random and skilled impostors)}
 
-\end{figure}
-\section{Experiment 2}
+Moreover, in Figure \ref{fig:box_exp1} we can see that when running the experiments 30 times, the results are consistent, with a low dispersion around the average. We can notice that our proposed method results are comparable to the real signatures.
+
+\begin{figure*}[!htb]
+\centering
+ \subfloat[mono-session - random forgeries]{\includegraphics[width=1.3in]{boxplot/mono-random.png}} 
+\hspace*{0.2in} % separation between the subfigures
+\subfloat[mono-session - skilled forgeries] {\includegraphics[width=1.3in]{boxplot/mono-skilled.png}}
+\hspace*{0.3in} % separation between the subfigures
+\subfloat[multi-session - random forgeries]{\includegraphics[width=1.3in]{boxplot/multi-random.png}} 
+\hspace*{0.2in} % separation between the subfigures
+\subfloat[multi-session - skilled forgeries] {\includegraphics[width=1.3in]{boxplot/multi-skilled.png}}
+\caption{Boxplot comparison for running 30 times the Experiment 1 - mono-session scenario and multi-session. (a) mono-session scenario, random forgeries, (b) mono-session scenario, skilled forgeries, (c) multi-session scenario, random forgeries, (d) multi-session scenario, skilled forgeries. } \label{fig:box_exp1}
+\end{figure*}
+
+\section{Feasibility of synthetically increasing the enrollment samples - Experiment 2}
 In the last experiment, the feasibility of synthetically
-increasing the enrollment set is analyzed. As described in
-Sect. III, three different enrollment sets are considered. As it
-may be observed in Figure \ref{exp2}, the DET curves for the
+increasing the signature verification enrollment set is analyzed. As it is described in
+Chapter \ref{ch:exp}, three different enrollment sets are considered. As it
+may be observed in Figure \ref{fig:exp2}, the DET curves for the
 mixed enrollment (real + synthetic, grey dashed line), show a
 better performance compared to the case with only four real
 enrolled samples (black line), regardless of the operating point or the scenario considered. More specifically, the EER decreases from 10.26\% to 9.74\% on the random forgeries scenario and from 21.55\% to 19.17\% for skilled forgeries, respectively. The addition of synthetic samples for training thus leads to better recognition results.
+\begin{figure}[!htb]
+	\centering
+	
 
+	\includegraphics[width=4.5in]{rocs/experiment2}
+	% where an .eps filename suffix will be assumed under latex, 
+	% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+	% via \DeclareGraphicsExtensions.
+	\caption{DET curves for real offline signatures and synthetic signatures (from Diaz and our proposed method), for the second experiment, for the two scenarios considered (random and skilled impostors)}
+	\label{fig:exp2}
+\end{figure}
 
 It should also be noted that the behavior of the mixed enrollment is similar to the scenario with eight real enrolled samples (i.e., using eight real samples instead of
 four real and four synthetic, black line) for skilled forgeries, and even yields a small improvement on the skilled forgery recognition rates. 
 
-We may thus conclude that, our proposed system can be a good alternative to synthetically increase the off-line signatures samples when complementary on-line samples are available in order to increase the accuracy of the off-line verification system.
+Furthermore, we can see in Figure \ref{fig:boxexp2} that when running the experiments for 30 times, the results of our proposed method has a consistent mean, with
+a lower variance around the average. In addition to achieving a comparable EER to using 8 real samples on the enrollment set on the random forgery and skilled forgery scenario.
+
+We may thus conclude that, our proposed system can be a good alternative to synthetically increase the offline signatures samples when complementary online samples are available in order to increase the accuracy of the offline verification system.
+
+
+
+
+\begin{figure}[!htb]
+\centering
+ \subfloat[mixed enrollment - random forgeries]{\includegraphics[width=2.0in]{boxplot/mixed-random.png}} 
+\hspace*{0.8in} % separation between the subfigures
+\subfloat[mixed enrollment - skilled forgeries] {\includegraphics[width=2.0in]{boxplot/mixed-skilled.png}}
+\caption{Boxplot comparison for Experiment 2: mixed enrollment - (a) random forgeries and (b) skilled forgeries. } \label{fig:boxexp2}
+\end{figure}
