@@ -20,32 +20,30 @@ In this chapter, we describe our proposed approach. First, the dataset used to t
 \section{Online to offline training data}
 In order to train our Neural Network to perform the approximation task of ``online to offline conversion'' we need both the online version of a handwritten manuscript containing the trajectory and pressure information mapped to the respective resulting offline representation, as in Figure \ref{fig:offon}. In order to acquire the online trajectory as well as the digital image for the same handwriting signal, some points have to be considered.
 
-online signatures can't be projected in the respective offline version
+The acquisition phase of such dual dataset requires some extra steps. A paper form must be placed over a digital tablet to be filled with an electronic ink-pen. Then, the dynamic data is captured through the tablet and the paper form might be scanned to provide the offline image, Figure \ref{fig:dualonoff} illustrates this setup. Thereby, two complementary files are available. One contains the dynamic information, and the other one is the digital image of this piece of handwritten signature produced by the scanner. 
+\begin{figure}[!htb]
+\centering
+\includegraphics[width=0.7\textwidth]{dualonoff}
 
-don't match perfectly if you plot both in a single image (like your "onoff.png"). I'm not sure how they collected BiosecurID but this is a difficult problem to solve since BiosecurID was collected a long time ago in ATVS 
+\caption{An user signing on a paper placed over a digitizing tablet. This way, the dynamic and static versions of the same signature are acquired simultaneously. Figure extracted from \cite{galbally2015line}}
+\label{fig:dualonoff}
+\end{figure}
 
-To the best of our knowledge the creators of the BiosecurID had not this characteristic in mind as well as the creators of other \cite{biomet, myidea, sigcomp2009, sigma, sigwicomp2013, sigwicomp2015} publicly available dual modal signature datasets.
+In order to project the online signature in the respective offline version, these two types of information should be available within the same coordinate system, with the same origin, the same resolution and orientation. However, as the two acquisition systems (tablet and scanner) are processing the writing separately and with their own parameters, this assumption is not satisfied directly. Geometrical transformations have to be applied to compensate for these differences. To the best of our knowledge, however, the creators of the publicly available dual modal signature datasets \cite{biosecurid, biomet, myidea, sigcomp2009, sigma, sigwicomp2013, sigwicomp2015} had not this characteristic satisfied. As it can be seen on Figure \ref{fig:onoff}, the multi different signatures domain do not match if we plot it in a single image.
+
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.5\textwidth]{onoff}
 % where an .eps filename suffix will be assumed under latex, 
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-\caption{The proposed approach diagram and an example of the synthetic signature generation.}
+\caption{A sample from the BiosecurID dataset. Here we can see that the online signature (interpolated in red) can not be projected in the respective offline version.}
 \label{fig:onoff}
 \end{figure}
 
+The dual domain IRONOFF handwritting dataset was thus used to train our model. Besides acquiring both domains of the handwriting manuscript, the online data is mapped to the same coordinate system of the offline data, as shown in Figure \ref{fig:ironoff-mapped}, the interpolated online data is shown in white. Using this dataset we make the fair assumption that a handwritten signature is a handwritten manuscript. With that in mind, we expect that even if the network was trained on handwriting manuscripts it would work for online signatures to generate its static version.
 
-For each sample in the database, two complementary files are available. One of them, produced during the online acquisition, contains the list of the coordinates of the pen trajectory, the other one is the digital image of this piece of handwriting produced by the scanner. Of course, these two types of information should be available within the same coordinate system, with the same origin, the same resolution and orientation. But, as the two acquisition systems (tablet and scanner) are processing the writing separately and with their own parameters, this assumption is not satisfied directly. Geometrical transformations have to be applied to compensate for these differences.
-
-The neural network was trained using the data from the IRONOFF dataset \cite{viard1999ireste}. The database contains a total of
-23000 mapped online and
-offline information of the handwriting manuscripts. The
-offline handwriting signals have been sampled with a spatial
-resolution of 300 dots per inch (DPI), with 8 bits per pixel
-(256 gray level). The training data set contains 24,177 word
-images, and another 12,219 images have been used as test
-data.
+The database contains a total of 23000 mapped online and offline information of the handwriting manuscripts. The offline handwriting signals have been sampled with a spatial resolution of 300 dots per inch (DPI), with 8 bits per pixel (256 gray level). The training data set contains 22000 word images, and another 1000 images have been used as validation data.
 
 \begin{figure}[!htb]
 \centering
@@ -61,11 +59,7 @@ data.
 \section{Preprocessing}
 %Copy and paste
 The neural networks expect inputs of a fixed size, where signatures vary significantly in
-shape (in IRONOFF, they range from small handwritten samples of size 167x214 to larger samples of size 548x215 pixels). In order to have a fixed size, we first normalize the images to the largest image size, by padding the images with
-white background. In this case, we centered the manuscript in
-a canvas of size 548x215 pixels, aligning the center of mass
-of the sample to the center of the image, similar to previous
-approaches in the literature, e.g. \cite{pourshahabi2009offline}. We then rescaled the
+shape (in IRONOFF, they range from samples of size 167x214 to larger samples of size 548x215 pixels). In order to have a fixed size, we first normalize the images to the largest image size, by padding the images with white background. In this case, we centered the manuscript in a canvas of size 548x215 pixels, aligning the center of mass of the sample to the center of the image, similar to previous approaches in the literature, e.g. \cite{pourshahabi2009offline}. We then rescaled the
 images to 383x150 pixels, i.e. 70\% of the canvas size, maintaining the aspect ratio of the original sample. This size was chosen to be large enough to keep
 details from the pen strokes in the manuscript.
 
@@ -97,26 +91,20 @@ Figure \ref{fig_ironoff} shows an example of the preprocessed input and the grou
 
 \section{Neural Network model}
 
-The fully convolutional neural network (FCN) is adopted to learn an end-
-to-end nonlinear mapping from online represetation to static image.
+Our model is based on the fully convolutional neural network architecture, adopted to learn an end-
+to-end nonlinear mapping from online represetation to static image. Our Neural Network model is fed with the interpolated online sample pressure information and we expect the respective offline sample on the output, i.e. the input is the pressure information and the desired output is the static manuscript.
 
-Our model is based on the concept of autoassociative memory \cite{jensen1996physiologically, weinberger2004specific}, commonly known as autoencoders. Autoencoders are normally used to reduce high-dimensional data into a low-dimensional code to later reconstruct the data from the compressed code, i.e., the desired output is the same of the input pattern \cite{kramer1991nonlinear, hinton2006reducing}. In our case, instead of expect the output to be the same as the input, our Neural Network model is fed with the interpolated online sample pressure information and we expect the respective offline sample on the output, i.e. the input is the pressure information and the desired output is the static manuscript.
 
-\cite{springenberg2014striving}  we can remove each pooling layer and increase the stride of the convolutional layer that preceded it accordingly
 
-We use an architecture based on the Convolutional Autoencoder \cite{masci2011stacked}. The expectation is that by learning to transform between online information to offline manuscripts, the network will learn convolution filters that are relevant to synthesize offline signatures based the online sample.
+We use a simplified architecture based on the one proposed in \cite{long2015fully}. The expectation is that by learning to transform between online information to offline manuscripts, the network will learn convolution filters that are relevant to synthesize offline signatures based the online sample.
 
+Our convolutions architecture is a simplified version of FCN-VGG \cite{long2015fully, simonyan2014very} and the transposed convolutions were symmetric to the convolution operations. Some tests showed that the capacity of the former network seems to be too large for the problem at hand, particularly considering the amount of convolution operations. We observed that the Neural Network was not learning useful transformations on the first few epochs. We obtained better results with this simplified version. For the purpose of replicating our experiment, we provide a full list of the parameters used in our tests. Table \ref{table:cnn-arch} lists the definition of the Convolutional Autoencoder layers. For convolution and transpose convolution layers, we list the size as NxHxW where N is the
+number of filters, H is the height and W is the width of the convolution and transpose convolution windows, respectively. 
 
 \begin{table}[!htb]
-%% increase table row spacing, adjust to taste
 \renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
 \caption{Summary of the CNN Layers}
-\label{cnn-arch}
 \centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
 \begin{tabular}{|l|l|}
 \hline
 \textbf{Layer}        & \textbf{Size} \\ \hline
@@ -129,34 +117,28 @@ Transpose Convolution & 32x3x3        \\ \hline
 Transpose Convolution & 32x3x3        \\ \hline
 Transpose Convolution & 16x3x3        \\ \hline
 \end{tabular}
+\label{table:cnn-arch}
 \end{table}
-
-
-
-We used the convolutions architecture similar to the one proposed on \cite{simonyan2014very} and the transposed convolutions were symmetric to the convolution operations. Some tests showed that the capacity of this network seems to be
-too large for the problem at hand, particularly considering the
-amount of convolution operations. We observed that the Neural Network was not learning useful transformations on the first few epochs. We obtained better results with. For the purpose of replicating our experiment, we provide a full list of the parameters used in our tests. Table \ref{table:cnn-arch} lists the definition of the Convolutional Autoencoder layers. For convolution and
-transpose convolution layers, we list the size as NxHxW where N is the
-number of filters, H is the height and W is the width of the
-convolution and transpose convolution windows, respectively. 
 
 We used Leaky Rectified Linear Units (LReLUs) the activation function for all convolutional layers. We also tried the Rectified Linear Units (ReLUs) but we observed that on the first 10 epochs the Neural Network seemed to be converging faster with the LReLUs. 
 
-For every convolutional layer we use a stride (the distance between applications of the convolution operation) of 2x2, and we pad the input for every layer with 0  evenly left and right. We initialize the weights of the model using the technique proposed by Glorot and Bengio \cite{glorot2010understanding}, and the biases to 0. We trained the model with Adam optimizer to minimize the minimum squared error (MSE) loss for 100 epochs, using a learning rate of 0.001, and mini-batches of size 16. The network was trained using the library Tensorflow, and took around 72 hours to train on a GTX 670 GPU.
+For every convolutional layer we use a stride (the distance between applications of the convolution operation) of 2x2, following what was observed by \cite{springenberg2014striving} that we can remove each pooling layer and increase the stride of the convolutional layer that preceded it accordingly, and we pad the input for every layer with 0 evenly left and right. We initialize the weights of the model using the technique proposed by Glorot \textit{et al}\cite{glorot2010understanding}, and the biases to 0. We trained the model with Adam optimizer to minimize the minimum squared error (MSE) loss for 100 epochs, using a learning rate of 0.001, and mini-batches of size 16. The network was trained using the library Tensorflow, and took around 5 days to train on a GTX 670 GPU.
 
 \section{Training Results}
-
+The MSE loss on the validation set over the 100 trainig epochs can be seen in Figure \ref{fig:trainingMSE}. We can see that the loss kept stuck at around 0.001 for around 80 epochs.
 \begin{figure}[!htb]
 \centering
-\includegraphics[width=5.5in]{iterations}
+\includegraphics[width=0.8\textwidth]{iterations}
 % where an .eps filename suffix will be assumed under latex, 
 % and a .pdf suffix will be assumed for pdflatex; or what has been declared
 % via \DeclareGraphicsExtensions.
-\caption{Iterations versus MSE}
+
+\caption{Iterations versus validation loss.}
 \label{fig:trainingMSE}
 
 \end{figure}
 
+Figure \ref{fig:resultingsamples} illustrates the predictions on the validation data of the final trained model.
 \begin{figure}[!htpb]
 \centering
 \subfloat{\includegraphics[scale=0.5]{samples/0}} 
@@ -183,6 +165,6 @@ For every convolutional layer we use a stride (the distance between applications
 
 
 
-\caption{Not cherry-picked} \label{fig:resultingsamples}
+\caption{A not cherry-picked selection of synthetic handwritten manuscripts produced by the neural network and the respective expected groundtruth manuscript.} \label{fig:resultingsamples}
 \end{figure}
 

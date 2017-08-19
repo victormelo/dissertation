@@ -17,21 +17,21 @@ The system used for the evaluation of the real and synthetic signatures is a Lin
 
 \subsection {Support Vector Machine} 
 SVMs represent a special class of linear classifiers. In order to classify a pattern as
-belonging to one of two classes, an SVM constructs a hyperplane in the feature space,
-such that it maximally separates the margin between the two classes. For this reason,
-SVMs are also referred to as maximum margin classifiers.
+belonging to one of two classes, an SVM constructs a plane such that it maximally separates the margin between the two classes, as it can be seen in Figure \ref{fig:svm}. For this reason, SVMs are also referred to as maximum margin classifiers.
 
 \begin{figure*}[!htb]
 \centering
- \subfloat[mono-session - random forgeries]{\includegraphics[width=2.3in]{separating-lines}} 
+ \subfloat[the data can be separated using different lines]{\includegraphics[width=2.3in]{separating-lines}} 
 \hspace*{0.5in} % separation between the subfigures
-\subfloat[mono-session - skilled forgeries] {\includegraphics[width=2.3in]{optimal-hyperplane}}
+\subfloat[the SVM strives for the optimal line, which maximally separates the margin between the two classes of data] {\includegraphics[width=2.3in]{optimal-hyperplane}}
 
-\caption{Boxplot comparison for running 30 times the Experiment 1 - mono-session scenario and multi-session. (a) mono-session scenario, random forgeries, (b) mono-session scenario, skilled forgeries, (c) multi-session scenario, random forgeries, (d) multi-session scenario, skilled forgeries. } \label{fig:box_exp1}
+\caption{Illustration of several separating lines and an optimal line.} \label{fig:svm}
 \end{figure*}
 
 \subsection {Feature Learning} 
-ideas from transfer learning and multi-task learning to learn features using Convolutional Neural Networks (CNN).
+As discussed in Chapter \ref{ch:nndl}, one of the advantages of using deep learning techniques is
+not requiring to design feature extractors, but instead let the model learn them. The offline signature verification system feature extractor takes advantage of this concept. 
+
 
 \section{Evaluation Database}
 
@@ -103,31 +103,31 @@ genuine.
 
 A derived metric usually reported is the Average Error rate (AER) which is the average of FAR and FRR. Moreover, when experimenting an AHSVS, the trade-off between FRR and FAR must be taken into account based on the type of application and other aspects related to where the system is used. When the decision threshold of a system is set to have the FRR approximately equal to the FAR, the Equal Error Rate (EER) is calculated.
 
-Besides quantitative results, the performance can be also compared and visualized using graphs. Receiver operating characteristics (ROC) graphs have been used increasingly in machine learning and data mining research \cite{fawcett2006introduction}. Inicialmente, a curva ROC foi desenvolvida para demonstrar as relações sinal-ruído,
-interpretando o sinal como verdadeiros positivos (sensibilidade) e o ruído, os falsos positivos
-(especificidade). Assim, a leitura da curva ROC é de um gráfico de sensibilidade ou taxas de
-verdadeiros positivos versus taxa de falsos positivos, como apresentado na Figura 26. Os
-gráficos ROC são bidimensionais, estando o eixo Y com os valores verdadeiros positivos e o
-eixo X preenchido com os valores da taxa falsos positivo.
+%Besides quantitative results, the performance can be also compared and visualized using graphs. Receiver operating characteristics (ROC) graphs have been used increasingly in machine learning and data mining research \cite{fawcett2006introduction}. Inicialmente, a curva ROC foi desenvolvida para demonstrar as relações sinal-ruído,
+%interpretando o sinal como verdadeiros positivos (sensibilidade) e o ruído, os falsos positivos
+%(especificidade). Assim, a leitura da curva ROC é de um gráfico de sensibilidade ou taxas de
+%verdadeiros positivos versus taxa de falsos positivos, como apresentado na Figura 26. Os
+%gráficos ROC são bidimensionais, estando o eixo Y com os valores verdadeiros positivos e o
+%eixo X preenchido com os valores da taxa falsos positivo.
+%
+%O objetivo da ferramenta curva ROC é atingir a representação perfeita do experimento,
+%considerando o conjunto de amostras analisado.
+%O objeto de estudo tem sua avaliaçãoidentificada pela localidade do ponto no gráfico. Quão mais próximo o ponto estiver do eixo Y,
+%melhor será o resultado. Assim, a diagonal traçada do ponto (0,0) ao ponto (1,1) serve de
+%direcionamento para identificar quais são os melhores resultados, estes localizados
+%predominantemente acima da reta [FAWCELT, 2006]. 
+%
+%A métrica utilizada no estudo do ICDAR 2009 [BLANKERS et al, 2009] foi a Detection
+%Error Trade-off curve (DET) [MARTIN, 1997] (gráfico visualizado na Figura 28). Esta métrica
+%é mais conhecida como a curva DET. Esta curva corresponde a um gráfico que estabelece uma
+%relação entre as taxas de erro diferentemente da curva ROC. A curva é definida como a linha
+%contendo os pontos onde x = y, ou seja, posição onde os erros FRR e FAR possuem o mesmo
+%valor. Assim, o gráfico é gerado baseando-se na taxa EER. No gráfico DET o melhor resultado
+%está localizado o mais próximo do eixo inicial (o ponto 0 (zero)). O mais próximo apresenta,
+%assim, o menor erro de classificação. Esta métrica foi utilizada pelo ICDAR para definir o
+%algoritmo de classificação da competição com o melhor EER nos problemas de verificação de
+%assinaturas nos modos off-line e on-line.
 
-O objetivo da ferramenta curva ROC é atingir a representação perfeita do experimento,
-considerando o conjunto de amostras analisado.
-O objeto de estudo tem sua avaliaçãoidentificada pela localidade do ponto no gráfico. Quão mais próximo o ponto estiver do eixo Y,
-melhor será o resultado. Assim, a diagonal traçada do ponto (0,0) ao ponto (1,1) serve de
-direcionamento para identificar quais são os melhores resultados, estes localizados
-predominantemente acima da reta [FAWCELT, 2006]. 
-
-A métrica utilizada no estudo do ICDAR 2009 [BLANKERS et al, 2009] foi a Detection
-Error Trade-off curve (DET) [MARTIN, 1997] (gráfico visualizado na Figura 28). Esta métrica
-é mais conhecida como a curva DET. Esta curva corresponde a um gráfico que estabelece uma
-relação entre as taxas de erro diferentemente da curva ROC. A curva é definida como a linha
-contendo os pontos onde x = y, ou seja, posição onde os erros FRR e FAR possuem o mesmo
-valor. Assim, o gráfico é gerado baseando-se na taxa EER. No gráfico DET o melhor resultado
-está localizado o mais próximo do eixo inicial (o ponto 0 (zero)). O mais próximo apresenta,
-assim, o menor erro de classificação. Esta métrica foi utilizada pelo ICDAR para definir o
-algoritmo de classificação da competição com o melhor EER nos problemas de verificação de
-assinaturas nos modos off-line e on-line.
-
-\section{Statistical Evaluation}
+%\section{Statistical Evaluation}
 
 

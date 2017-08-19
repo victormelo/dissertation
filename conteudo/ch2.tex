@@ -1,8 +1,7 @@
  %!TEX root = ../dissertation_vkslm.tex
 
 \chapter{Neural Networks and Deep Learning} \label{ch:nndl}
-This chapter introduces and gives a brief overview of the theoretical foundations
-of Deep Neural Networks. In the first section, basic concepts of Artificial Neural Networks are presented, starting from the original models. The next section gives an introduction and a general overview of the deep learning research field, discussing the recent advancements that enabled training Deep Neural Networks successfully. Finally, we briefly describe the fundamentals of the Convolutional Neural Network and present the Fully Convolutional Networks, which is a model used in this work and we present the techniques used for training our model.
+This chapter introduces and gives a brief overview of the theoretical foundations of Deep Neural Networks. In the first section, basic concepts of Artificial Neural Networks are presented, starting from the original models. The next section gives an introduction and a general overview of the deep learning research field, discussing the recent advancements that enabled training Deep Neural Networks successfully. Finally, we briefly describe the fundamentals of the Convolutional Neural Network and present the Fully Convolutional Networks, which is a model used in this work, and we present the techniques used for training our model.
 
 \section{Artificial Neural Networks}
 
@@ -34,10 +33,10 @@ bias term and $f$ the activation function.
 %\end{equation}
 
 
-Models based perceptrons, have severe limitations. An evaluation by Minsky and Papert \cite{papert1969perceptrons} showed that a perceptron cannot model data that is not linearly separable, such as a simple XOR operator. It was observed that ``for data sets that are not linearly separable, the perceptron learning algorithm will never converge'' \cite{bishop2006pattern}. This observation is related to the perceptron's limited representational power, the learning rule only converges to the correct solution if the data is linearly separable. The Multilayer Perceptron (MLP) with a single hidden layer, however, has been proven \cite{hornik1989multilayer} to approximate any continuous function on a compact input domain to arbitrary precision. For this reason MLPs are said to be \textit{universal function approximators} \cite{hornik1989multilayer}.
+Models based on perceptrons have severe limitations. An evaluation by Minsky and Papert \cite{papert1969perceptrons} showed that a perceptron cannot model data that is not linearly separable, such as a simple XOR operator. It was observed that ``for data sets that are not linearly separable, the perceptron learning algorithm will never converge'' \cite{bishop2006pattern}. This observation is related to the perceptron's limited representational power, the learning rule only converges to the correct solution if the data is linearly separable. The Multilayer Perceptron (MLP) with a single hidden layer, however, has been proven \cite{hornik1989multilayer} to approximate any continuous function on a compact input domain to arbitrary precision. For this reason, MLPs are said to be \textit{universal function approximators} \cite{hornik1989multilayer}.
 
 \section{Multi-layer Neural Networks}
-Multi-layer Neural Networks such as the MLP consist of stacking several neuron units together. Specifically in the MLP, neurons are stacked in one layer connecting these stacks sequentially, without connections between the neurons in the same layer, as it is shown in Figure \ref{mlp}. Each neuron in the MLP is normally fully connected with all the neurons in the next layer, with its own set of weights. The first layer of an MLP is usually the input sample and the last layer is the output of the network. The layers between the input and output layers are called hidden layers.
+Multi-layer Neural Networks such as the MLP consist of stacking several neuron units together. Specifically, in the MLP, neurons are stacked in one layer connecting these stacks sequentially, without connections between the neurons in the same layer, as it is shown in Figure \ref{mlp}. Each neuron in the MLP is normally fully connected with all the neurons in the next layer, with its own set of weights. The first layer of an MLP is usually the input sample, and the last layer is the output of the network. The layers between the input and output layers are called hidden layers.
 
 \begin{figure}[!htb]
 \centering
@@ -58,7 +57,7 @@ where $W^{(l)}$ is a matrix of weights assigned to each pair of neurons from lay
 \subsection{Loss Function}
 %control c control v
 In order to train the model, an objective function, also called loss function, is defined.
-This function measures the compatibility between a prediction (e.g. the class scores in classification) and the ground truth label. The
+This function measures the compatibility between a prediction (e.g., the class scores in classification) and the ground truth label. The
 objective of the training is to minimize the sum (or, equivalently, the mean) of
 this error function applied to all examples in the dataset. Commonly used loss functions
 are the Mean Squared Error function (MSE), and the Cross Entropy (CE). Equations \ref{eq:mse} and \ref{eq:ce} describe the MSE and CE, respectively, for an sample of the dataset.
@@ -84,9 +83,9 @@ error from the output layers, back to the initial layers, one layer at a time, i
 w(t+1) = w(t) - \alpha\ \Delta\ E(w(t))
 \label{eq:bp}
 \end{equation}
-where $E$ is error measure defined as loss sum over the entire training set, and $t$ indicates iterations (time steps). The $\Delta(E)$ is the gradient vector, which is computed by applying the chain rule on the layers of the NN \cite{rumelhart1985learning}. The parameter $\alpha$ is a heuristic, called learning rate. The learning rate values help to avoid convergence to a local-minimum or maximum point. In order to secure the convergence of the backpropagation training algorithm and avoid oscillations in a steep direction of the error surface a small learning rate is chosen $(0 < \alpha < 1)$.
+where $E$ is the error measure defined as loss sum over the entire training set, and $t$ indicates iterations (time steps). The $\Delta(E)$ is the gradient vector, which is computed by applying the chain rule on the layers of the NN \cite{rumelhart1985learning}. The parameter $\alpha$ is a heuristic, called learning rate. The learning rate values help to avoid convergence to a local-minimum or maximum point. In order to secure the convergence of the backpropagation training algorithm and avoid oscillations in a steep direction of the error surface, a small learning rate is chosen $(0 < \alpha < 1)$.
 
-\subsection{Activation function}
+\subsection{Activation functions}
 \begin{figure}[!htb]
 \centering
  \subfloat[Sigmoid]{\includegraphics[width=2.5in]{sigmoid}} 
@@ -101,12 +100,12 @@ where $E$ is error measure defined as loss sum over the entire training set, and
 \caption{Neural network activation functions. } \label{fig:activation}
 \end{figure}
 \subsubsection{Sigmoid}
-The sigmoid activation function is a non-linear function in the range of $]0, 1[$ and has the mathematical form defined in Equation \ref{eq:sigmoid}
+The sigmoid activation function is a non-linear function in the range of $]0, 1[$ and has the mathematical form defined in Equation \ref{eq:sigmoid} and is shown in the Figure \ref{fig:activation} (a).
 \begin{equation}
 f(x) = \frac{1}{1+e^{-x}}
 \label{eq:sigmoid}
 \end{equation}
-and is shown in the Figure \ref{fig:activation} (a). It takes a real-valued number and transforms it to the range between 0 and 1. In particular, large negative numbers become 0 and large positive numbers become 1. The sigmoid function has seen frequent use historically since it has a natural interpretation as the firing rate of a neuron: from not firing at all (0) to fully-saturated firing at an assumed maximum frequency (1). 
+It takes a real-valued number and transforms it to the range between 0 and 1. In particular, large negative numbers become 0 and large positive numbers become 1. The sigmoid function has seen frequent use historically since it has a natural interpretation as the firing rate of a neuron: from not firing at all (0) to fully-saturated firing at an assumed maximum frequency (1). 
 
 \subsubsection{Tanh}
 
@@ -127,7 +126,7 @@ in other words, the activation is simply thresholded at zero, see Figure \ref{fi
 
 \subsubsection{LReLU}
 
- Leaky ReLUs are one attempt to fix the “dying ReLU” problem. Instead of the function being zero when x < 0, a leaky ReLU will instead have a small negative slope (of 0.01, or so). That is, the function computes where $\alpha$ is a small constant. Some people report success with this form of activation function, but the results are not always consistent. 
+ Leaky ReLU is one attempt to fix the “dying ReLU” problem. Instead of the function being zero when x < 0, a leaky ReLU will instead have a small negative slope (of 0.01, or so). That is, the function computes where $\alpha$ is a small constant. Some people report success with this form of activation function, but the results are not always consistent. 
 
 \begin{equation}
 f(x)=\begin{cases}
@@ -163,17 +162,17 @@ Figure \ref{fig:activation} (d)
 
 \section{Deep Neural Networks}
 Deep architectures are characterized by the multiple levels of non-linear operations
-contained on a neural network. While many of the early successful applications of neural networks used shallow architectures (up to 3 hidden layers), the mammal brain is organized in a deep architectures. The brain appears to process information through multiple stages, which is particularly clear in the primate visual system \cite{bengio2009learning}. 
+contained on a neural network. While many of the early successful applications of neural networks used shallow architectures (up to 3 hidden layers). It was found, however, that the mammal brain is organized in a deep architecture. The brain appears to process information through multiple stages, which is particularly clear in the primate visual system \cite{bengio2009learning}. 
 
 It was observed in many experiments that deep networks are harder to train than shallow networks, and that training deep networks often get stuck in apparent local minima (or plateaus) when starting with random initialization of the network parameters. Deep Neural Networks have been investigated for decades, but training deep networks consistently yielded poor results. 
 
-The proposal of the Convolutional Neural Network \cite{lecun1995convolutional} and some recent theoretical discoveries made training deep neural networks feasible. The CNN is a particular type of deep, feedforward neural network that is easier to train and generalized better than networks with full connectivity between adjacent layers \cite{lecun2015deep}. Besides, the theoretical studies include unsupervised training of the layers \cite{hinton2006fast}, Rectifier Linear Unit (ReLU) \cite{nair2010rectified} as the activation function and the regularization technique dropout \cite{srivastava2014dropout}. 
+The proposal of the Convolutional Neural Network \cite{lecun1995convolutional} and some recent theoretical discoveries made training deep neural networks feasible. The CNN is a particular type of deep, feedforward neural network that is easier to train and generalized better than networks with full connectivity between adjacent layers \cite{lecun2015deep}. Besides, the theoretical findings include unsupervised training of the layers \cite{hinton2006fast}, Rectifier Linear Unit (ReLU) \cite{nair2010rectified} as the activation function and the regularization technique dropout \cite{srivastava2014dropout}. 
 
 
 \section{Convolutional Neural Networks}
 CNNs combine three architectural ideas: local receptive fields, shared
-(tied) weights and spatial or temporal sub-sampling \cite{lecun1998gradient}. When trained with appropriate regularization, CNN can achieve superior performance
-on visual object recognition and image classification tasks \cite{lecun2015deep}. The CNN is composed of several layers of trainable filters (convolutional layers) and local neighborhood pooling operations (pooling layers) stacked in an alternating sequence starting with the raw input images. To illustrate the concept, Figure \ref{lenet} shows an example of architecture of a CNN, namely, the Lenet \cite{lecun1998gradient}, one of the first applications of the CNN used for handwriting recognition.
+(tied) weights and spatial or temporal sub-sampling \cite{lecun1998gradient}. When trained with appropriate regularization, CNN achieves state-of-the-art performance
+on visual object recognition and image classification tasks \cite{lecun2015deep}. The CNN is composed of several layers of trainable filters (convolutional layers) and local neighborhood pooling operations (pooling layers) stacked in an alternating sequence starting with the raw input images. To illustrate the concept, Figure \ref{lenet} shows an example of an architecture of a CNN, namely, the Lenet \cite{lecun1998gradient}, one of the first applications of the CNN used for handwriting recognition.
 
 \begin{figure}[!htb]
 \centering
@@ -196,7 +195,7 @@ capable of learning interesting feature detectors, similar to edge detectors.
 Convolutional layers have trainable filters (also called feature maps) that are applied
 across the entire input \cite{lecun1995convolutional}. For each filter, each neuron is connected only to a subset of
 the neurons in the previous layer. In the case of 2D input (such as images), the filters
-define a small area (e.g. 3x3 or 5x5 pixels), and each neuron is connected only to the
+define a small area (e.g., 3x3 or 5x5 pixels), and each neuron is connected only to the
 nearby neurons (in this area) in the previous layer. The weights are shared across neurons,
 leading the filters to learn frequent patterns that occur in any part of the image.
 
@@ -245,18 +244,18 @@ per-pixel tasks. Extracted from \cite{long2015fully}}
 \subsection{Transposed Convolution}
 %https://arxiv.org/pdf/1603.07285.pdf p 19
 
-Transposed convolutions - also called deconvolution or backwards convolution - work
+Transposed convolutions - also called deconvolution or backward convolution - work
 by swapping the forward and backward passes of a convolution. One way to put
-it is to note that the kernel defines a convolution, but whether it’s a direct
+it is to note that the kernel defines a convolution, but whether it is a direct
 convolution or a transposed convolution is determined by how the forward and
 backward passes are computed.
 
-The need for transposed convolutions generally arises from the desire to use a
+The need for transposed convolutions arises from the desire to use a
 transformation going in the opposite direction of a normal convolution, i.e., from
 something that has the shape of the output of some convolution to something
 that has the shape of its input while maintaining a connectivity pattern that
 is compatible with said convolution. For instance, one might use such a transformation
-as the decoding layer of a FCN or to project feature maps to a higher-dimensional space. Figure \ref{fig:transposed} illustrates the general backwards convolution process \cite{dumoulin2016guide}.
+as the decoding layer of an FCN or project feature maps to a higher-dimensional space. Figure \ref{fig:transposed} illustrates the general backwards convolution process \cite{dumoulin2016guide}.
 
 \begin{figure}[!htb]
 \centering
@@ -276,7 +275,7 @@ When the training of the neural network starts, the initial values of the weight
 The uniform initialization is the most simple. The model parameters are initialized through a random distribution in the range of $[l1, l2]$, where $l1$ and $l2$ are two constants.
 
 \subsubsection{Glorot}
-This weight initialization technique was proposed in \cite{glorot2010understanding}. The dynamic of the activation functions and the gradients weights were studied and they found that the neural network converges faster using the weight initialization described in Equation \ref{eq:glorot}.
+This weight initialization technique was proposed in \cite{glorot2010understanding}. The dynamic of the activation functions and the gradients weights were studied, and they found that the neural network converges faster using the weight initialization described in Equation \ref{eq:glorot}.
 
 \begin{equation}
 W \sim U \; \left[\sqrt{\frac{6}{f_{in}+f_{out}}}\; \right] 
@@ -285,34 +284,35 @@ W \sim U \; \left[\sqrt{\frac{6}{f_{in}+f_{out}}}\; \right]
 where $W$ are the weights, $U$ is an uniform distribution, and $f_{in}$ and $f_{out}$ are the number of units in the previous layer and the next layer, respectively.
 
 \subsection{Optimization algorithm}
-Como dito na subseção 3.1.2, de posse dos gradientes dos parâmetros com
-relação à função de custo, calculados na fase Backward, é necessário atualizar os
-parâmetros de modo a minimizar a função de custo da RNAs, com o objetivo de
-que a mesma aprenda a desempenhar a tarefa de maneira satisfatória.
+Training the network consists in minimizing the error function, based on the gradients of the parameters with relation to the cost function, by updating the weights and biases, expecting that the network learn how to perform the task it is being trained for.
 
 \subsubsection{Stochastic Gradient Descent}
-Um dos algoritmos mais conhecidos para atualizar os parâmetros utilizando
-os gradientes dos mesmos com relação à função de custo é o Gradiente Descendente
-Estocástico (SGD, Stochastic Gradient Descent), a estocasticidade desse algoritmo
-ocorre devido a seleção de um exemplo aleatório do banco de dados para apresen-
-tado ao modelo. A Equação (20) mostra a aplicação da atualização SGD em um
-determinado peso de uma RNA.
-The SGD algorithm, as defined in [32], is described below at a high-level. The inputs
-are: W - the weights and biases of the network, (X, y) - the dataset, batch size - the
-number of training examples that are used in each iteration, and $\alpha$, the learning rate.
-For notation simplicity, all the model parameters are represented in W . In practice, each
-layer usually defines a 2-dimensional weight matrix and a 1-dimensional bias vector. In
-summary, SGD iterates over mini-batches of the dataset, performing forward-propagation
+
+The Stochastic Gradient Descent (SGD) algorithm, as defined in \cite{bishop2006pattern} can be summarized a series of iterations over mini-batches of the dataset, performing forward-propagation
 followed by a back-propagation to calculate the error derivatives with respect to the
 parameters. The weights are updated using these derivatives and a new mini-batch is
 used. This procedure is repeated until a convergence criterion is reached. Common
 convergence criteria are: a maximum number of epochs (number of times that the whole
 training set was used); a desired value for the cost function is reached; or training until
 the cost function shows no improvement in a number of iterations.
+
 \subsubsection{Adaptive Moment Estimation}
-A Estimação de Momento Adaptativa (ADAM, Adaptive Moment Estima-
-tion) é um método de otimização estocástica que necessita apenas de gradientes de
-primeira ordem e calcula taxas de aprendizagem adaptativas de maneira individual
-para os parâmetros a partir da estimação do primeiro e segundo momento dos
-gradientes. As Equações (24a) - (24e) mostram os cálculos necessários para utilizar
-este algoritmo de inicialização dos parâmetros.
+The Adaptive Moment Estimation (ADAM) is a stochastic optimization method that can adaptively tune the learning rate per parameter and also has a momentum term \cite{polyak1964some}. Equations \ref{adamstart} to \ref{adamend} describe how the parameters are updated using this method.
+
+\begin{subequations}\label{eq:adam}
+\begin{gather}
+m_{t} = \beta_{1} m_{t-1} + (1-B_{1})f'(w_{t-1}) \label{adamstart}
+\\
+m_{t}^2 = \beta_{2} m_{t-1}^2 + (1-B_{2})f'(w_{t-1})^2
+\\
+\hat{m}_{t} = \dfrac{m_{t}}{1-\beta_{1}^t}
+\\
+\hat{m}_{t}^2 = \dfrac{m_{t}^2}{1-\beta_{2}^t}
+\\
+w = w_{t-1} - \alpha \dfrac{\hat{m}_{t}}{ 
+\sqrt{\hat{m}_{t}^2} + \epsilon 
+}
+\label{adamend}
+\end{gather}
+\end{subequations}
+

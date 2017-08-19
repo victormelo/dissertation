@@ -167,11 +167,11 @@
 \begin{flushright}
 \SingleSpacing
 \normalsize\imprimirorientador \\
-Orientador
+Advisor
 
 \abntex@ifnotempty{\imprimircoorientador}{%
   \normalsize\imprimircoorientador \\
-  Coorientador
+  Co-Advisor
 
 }
 
