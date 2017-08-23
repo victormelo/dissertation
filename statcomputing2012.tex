@@ -1,0 +1,387 @@
+\documentclass{beamer}
+\mode<presentation>
+\usepackage{beamerthemesplit}
+
+\usepackage{verbatim}
+\usepackage{hyperref}
+
+%\usepackage{pgfpages}
+%\pgfpagesuselayout{4 on 1}[landscape,letterpaper,border shrink=2.5mm]
+
+
+
+
+
+\usetheme{Berlin}
+\usecolortheme{albatross}
+\setbeamerfont*{frametitle}{size=\normalsize}
+\setbeamertemplate{navigation symbols}{
+
+
+
+}
+
+% Setup TikZ
+
+\usepackage{tikz}
+
+
+\usetikzlibrary{positioning}
+% The face style, can be changed
+\tikzset{face/.style={shape=circle,minimum size=4ex,shading=radial,outer sep=0pt,
+        inner color=white!50!yellow,outer color= yellow!70!orange}}
+%% Some commands to make the code easier
+\newcommand{\emoticon}[1][]{%
+  \node[face,#1] (emoticon) {};
+  %% The eyes are fixed.
+  \draw[fill=white] (-1ex,0ex) ..controls (-0.5ex,0.2ex)and(0.5ex,0.2ex)..
+        (1ex,0.0ex) ..controls ( 1.5ex,1.5ex)and( 0.2ex,1.7ex)..
+        (0ex,0.4ex) ..controls (-0.2ex,1.7ex)and(-1.5ex,1.5ex)..
+        (-1ex,0ex)--cycle;}
+\newcommand{\pupils}{
+  %% standard pupils
+  \fill[shift={(0.5ex,0.5ex)},rotate=80]
+       (0,0) ellipse (0.3ex and 0.15ex);
+  \fill[shift={(-0.5ex,0.5ex)},rotate=100]
+       (0,0) ellipse (0.3ex and 0.15ex);}
+
+\newcommand{\emoticonname}[1]{
+  \node[below=1ex of emoticon,font=\footnotesize,
+        minimum width=4cm]{#1};}
+
+\usetikzlibrary{trees}
+
+\title[LaTeX:Presentations]{Latex: Presentations Using Beamer and Tikz}
+\subtitle[]{Biometry 789-02}
+\author{Emily Kistner-Griffin}
+\date{April 12, 2012}
+\institute[MUSC]{}
+\pgfdeclareimage[height=.7cm]{university-logo}{MUSCimage}
+\logo{\pgfuseimage{university-logo}}
+\begin{document}
+\begin{frame}
+\titlepage
+\end{frame}
+
+{
+  \begin{frame}<beamer>{Outline}
+    \tableofcontents[pausesections]
+  \end{frame}
+}
+
+\section{Introduction to Beamer}
+\subsection{}
+\begin{frame}[fragile]
+  \frametitle{What is Beamer?}
+  \begin{itemize}
+  \item Beamer is a LaTeX document class for producing slides created by Til Tantau at the University of Leubeck
+  \item Original version from 2003
+  \item Makes creating PDF presentations with bells and whistles straightforward
+  \item A guide to help you get started can be found: \url{http://www.math.umbc.edu/~rouben/beamer/quickstart.html}
+  \item You have learned \verb|\documentclass{article}|
+  \item Today we are discussing \verb|\documentclass{beamer}|
+   \end{itemize}
+\end{frame}
+
+\frame {
+  \frametitle{Beamer: Advantages}
+  \begin{itemize}
+  \item Unlike PowerPoint (particularly when using Equation Editor or importing figures), presentation will appear the same regardless of computer (MAC, PC)
+  \item Once you learn basic LaTeX commands, you can create presentations with varying layouts etc
+  \item Creates an automatic table of contents with clickable links (see header)
+  \item Themes allow changing appearance of the presentation
+  \item Inclusion of overlays and dynamic effects
+  \end{itemize}
+}
+
+\begin{frame}[fragile]
+  \frametitle{Beamer: Advantages}
+  \begin{itemize}
+  \item If you are writing your dissertation in LaTeX it is easy to cut and paste code to make conference/defense presentations or vice versa
+  \item Useful templates available with the Beamer download:
+  \begin{verbatim}C:\Program Files\MikTex 2.9\doc\latex\beamer
+  \solutions\ \end{verbatim}
+  \item A 247 page user guide is also available in the same folder:
+  \begin{verbatim}C:\Program Files\MikTex 2.9\doc\latex\beamer\
+  doc\beameruserguide.pdf\end{verbatim} - for the serious presenter!
+  \end{itemize}
+\end{frame}
+
+\frame {
+  \frametitle{Beamer: Templates}
+  \begin{itemize}
+  \item Let's try a template
+  \item Open template from class website and copy into WinEdt
+  \item Select tab "Tex" and PDF and PDFtexify
+  \item Nice elements not available in PowerPoint - table of contents, links to sections and subsections, etc
+  \end{itemize}
+}
+
+\frame {
+  \frametitle{Beamer: Themes}
+  \begin{itemize}
+  \item Beamer document class allows the user to select one of many themes to specify appearance
+  \item This lecture uses the theme Darmstadt
+  \item Many other themes are available: default, Boadilla, Madrid, Pittsburgh, Rochester, Copenhagen, Warsaw, Singapore, Malmoe, etc
+   \end{itemize}
+}
+
+\begin{frame}[fragile]
+  \frametitle{Colors}
+ To change the colors of the presentation you need to change
+ \verb|\usecolortheme{default}| in the preamble (before you begin the document)
+ \begin{block}{Color Options}
+ \begin{center}
+ albatross crane beetle dove fly seagull wolverine beaver
+ \end{center}
+\end{block}
+\end{frame}
+
+\section{The Basics}
+\subsection{}
+\begin{frame}[fragile]
+  \frametitle{Title Page}
+  \begin{itemize}
+  \item Very easy to change \verb|\title|, \verb|\subtitle|, \verb|\author|, \verb|\institute|, \verb|\date in template|
+  \item Notice [short paper title] for shorter titles, dates etc that display throughout presentation
+  \item Notice \verb|%| for commenting code
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[plain,fragile]
+  \frametitle{Frames}
+  \begin{itemize}
+  \item Each slide is coded as a frame: \verb|\begin{frame}| and \verb|end{frame}|
+  \item Can also code as \verb|\frame{ ... }|
+  \item Notice how \verb|\titlepage| and \verb|\tableofcontents| are specified
+  \item Sometimes I use the \verb|[pausesections]| option after \verb|\tableofcontents|
+  \item Specify titles on each slide with \verb|\frametitle{}| or with \verb|\begin{frame}{TITLE}|
+  \item Notice I can get rid of headers and footers with the frame option \verb|[plain]|
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Sections and Subsections}
+  \begin{itemize}
+  \item To create a section: \verb|\section{TITLE}|
+  \item Notice my sections in the header: Introduction to Beamer, Getting Started, etc
+  \item Also determines entries in the table of contents
+  \item Section and subsection commands are given \textit{outside} of frames!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Environments: Definitions}
+  \begin{itemize}
+  \item If you want to define something, specify \verb|\begin{definition}| and \verb|\end{definition}|:
+  \begin{definition}
+  $\pi$ is a mathematical constant that is the ratio of a circle's circumference to it's diameter.
+  \end{definition}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Environments: Theorems, Lemmas, Proofs, Corollaries, Examples}
+  \begin{itemize}
+  \item If you want to highlight an example, specify \verb|\begin{example}| and \verb|\end{example}|:
+  \begin{example}{PDF for the Cauchy Distribution}
+  \[f(x)= \frac{1}{\pi(1+x^{2})}\]
+  \end{example}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Generic Environments: Block}
+  \begin{itemize}
+  \item If you want to highlight any text, specify \verb|\begin{block}{TITLE}| and \verb|\end{block}|:
+  \begin{block}{PDF for the Cauchy Distribution}
+  \[f(x)= \frac{1}{\pi(1+x^{2})}\]
+  \end{block}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Frame Layout}
+  \begin{columns}
+  \column{.5\textwidth}
+  Column 1 can be specified with \verb|\begin{columns}| and \verb|\column{.5\textwidth}|
+  \column{.5\textwidth}
+  Column 2 specified by with \verb|\column{.5\textwidth}| and \verb|\end{columns}|
+  \end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \frametitle{Overlays}
+  \begin{itemize}
+  \item I use bullets on most slides with: \verb|\begin{itemize}| and \verb|\end{itemize}|
+  \pause
+  \item Each bullet is specified with: \verb|\item|
+  \pause
+  \item Then add \verb|\pause| after each item
+  \pause
+  \item This allows showing each bullet incrementally
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Overlays}
+  \begin{enumerate}
+  \item You can also enumerate with: \verb|\begin{enumerate}| and \verb|\end{enumerate}|
+  \pause
+  \item Each number is specified with: \verb|\item|
+  \pause
+  \item Then add \verb|\pause| after each item
+  \pause
+  \item This allows showing each number incrementally
+  \end{enumerate}
+\end{frame}
+
+\section{Adding Bells and Whisles}
+\subsection{}
+\begin{frame}[fragile]
+  \frametitle{Getting Complicated: Overlays}
+  \begin{itemize}
+  \item<1-> Show only the 1st item with \verb|\item<1->|
+  \item<2-> Then add each additional item by specifying \verb|\item<2->|
+  \item<3-> Then add each item with with \verb|\item<3->|
+  \item<4-> You don't need \verb|\pause| just specify the order in the \verb|<>|
+  \item<1-> and last item with \verb|\item<1->|!
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Getting Complicated: Overlays without Itemizing}
+  \uncover<1->{Without bullets use \textit{uncover}}
+  \uncover<2->{instead of \textit{item}.}
+  \uncover<3->{Or you can use \textit{only} instead of \textit{item}.}
+  \only<4->{You still need to specify on which slide the text should appear.}
+  \only<5->{But this is less readable.}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Getting Complicated: More Overlays}
+  \begin{itemize}
+  \item Highlight only on some slides
+  \item \alert<2>{For example only highlight this slide 2}
+  \item To do this use \verb|\alert<2>{}|
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Getting Complicated: More Overlays}
+  \begin{itemize}
+  \item Instead of highlighting you can change the colors of items
+  \item \color<2>{green}For example make green and blue bullets
+  \item \color<2>{blue}To do this use \verb|\color<2>{green}| or \verb|\color<2>{blue}|
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Graphics}
+ Let's add an image with code:
+ \verb|\includegraphics[height]{filename}|
+ \begin{center}
+  \includegraphics[height=35mm]{DNA.png}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Hyperlinks}
+ Let's add an hyperlink with code:
+ \verb|\url{http://people.musc.edu/~elg26/teaching/...}|
+ \begin{center}
+  \color{blue}
+  \url{http://people.musc.edu/~elg26/teaching/statcomputing.2012/statcomputingI.2012.htm}
+  \end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+  \frametitle{Handouts}
+ \begin{itemize}
+ \item Sometimes it's nice to provide handouts for your presentation
+ \item Need to change the document class option to \verb|documentclass[handout]{beamer}|
+ \item You also probably want to save paper by printing multiple slides/page
+     \begin{center}
+     \begin{verbatim}
+ \usepackage{pgfpages}
+ \pgfpagesuselayout{4 on 1}
+ [landscape,letterpaper,border shrink=2.5mm]
+     \end{verbatim}
+     \end{center}
+ \end{itemize}
+\end{frame}
+
+\section{Adding Tikz}
+\subsection{}
+\begin{frame}[fragile]
+  \frametitle{Drawing in Beamer}
+ \begin{itemize}
+ \item You can even draw in Beamer!
+ \item Need to add the tikz package \verb|\usepackage{tikz}|
+ \item To start drawing \verb|\begin{tikzpicture}| and you know how to end the picture
+ \item You need to end tikz commands with ;
+ \end{itemize}
+ \begin{center}
+ \begin{tikzpicture}
+ \emoticon[inner color=white!50!red,outer color= red!70!red!90!black]
+    \pupils\emoticonname{devilish}
+    %% mouth
+    \draw[thick,line cap=round] (-1ex,-1ex)
+         ..controls (-0.5ex,-1.5ex)and(0.5ex,-1.5ex)..(1ex,-1ex);
+    %% tail
+    \draw[very thick,-stealth,red!90!black] (emoticon.330)--++(330:0.01ex)
+         ..controls (3ex,-3ex)and(3.5ex,1ex)..(4ex,-2ex);
+    %% horns
+    \draw ( emoticon.80)..controls ( 0.6ex,2.4ex)..( 1ex,2.5ex)
+          ..controls ( 0.8ex,2.3ex)..(emoticon.70);
+    \draw (emoticon.100)..controls (-0.6ex,2.4ex)..(-1ex,2.5ex)
+          ..controls (-0.8ex,2.3ex)..(emoticon.110);
+
+ \end{tikzpicture}
+ \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{More Realistically}
+\begin{center}
+ \begin{tikzpicture}
+
+\def \n {5}
+\def \radius {3cm}
+\def \margin {8} % margin in angles, depends on the radius
+
+\foreach \s in {1,...,\n}
+{
+  \node[draw, circle] at ({360/\n * (\s - 1)}:\radius) {$\s$};
+  \draw[->, >=latex] ({360/\n * (\s - 1)+\margin}:\radius)
+    arc ({360/\n * (\s - 1)+\margin}:{360/\n * (\s)-\margin}:\radius);
+}
+\end{tikzpicture}
+\end{center}
+\end{frame}
+
+
+
+\section{Discussion}
+
+\subsection{}
+\frame {
+   \frametitle{}
+   \begin{center}
+   Questions?
+   \end{center}
+ }
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+

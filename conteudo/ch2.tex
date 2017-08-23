@@ -22,7 +22,7 @@ bias term and $f$ the activation function.
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=3.4in]{perceptron}
-\caption{Perceptron representation. $x_{1}$ and $x_{2}$ represent the input signal, $w_{1}$ and $w_{2}$ the weights, $f_{\sum}$ is the activation function (in this case, a step function) and the output signal is given by $y$.}
+\caption{Perceptron representation. $x_{1}$ and $x_{2}$ represent the input signal, $b$ the bias term, $w_{0}$, $w_{1}$, $w_{2}$ the weights, $f_{\:\sum}$ is the activation function (in this case, a step function) and the output signal is given by $y$.}
 \label{perceptron}
 \end{figure}
 
@@ -60,7 +60,7 @@ In order to train the model, an objective function, also called loss function, i
 This function measures the compatibility between a prediction (e.g., the class scores in classification) and the ground truth label. The
 objective of the training is to minimize the sum (or, equivalently, the mean) of
 this error function applied to all examples in the dataset. Commonly used loss functions
-are the Mean Squared Error function (MSE), and the Cross Entropy (CE). Equations \ref{eq:mse} and \ref{eq:ce} describe the MSE and CE, respectively, for an sample of the dataset.
+are the Mean Squared Error function (MSE), and the Cross-Entropy (CE). Equations \ref{eq:mse} and \ref{eq:ce} describe the MSE and CE, respectively, for an sample of the dataset.
 
 \begin{equation}
 E =  \frac{1}{N} \sum_{c}^{N} (t_{(c)} - y^{}_{(c)} )^2 
@@ -76,8 +76,7 @@ where $y^{}_{(c)}$ is the output of unit $c$ in the last layer, $t_{(c)}$
 the true label $t$ for unit $c$ and $N$ is the number of units on the last layer.
 \subsection{Backpropagation}
 The phase called backpropagation consists in minimizing the error $E$ between the network output and the expected target. The algorithm works by calculating the derivatives of the error
-function with respect to the model’s parameters (weights and biases) and propagating the
-error from the output layers, back to the initial layers, one layer at a time, in order to update the weights of the neuron connections to minimize the error $E$. The weights are updated conforming Equation \ref{eq:bp}
+function with respect to the model’s parameters (weights and biases). Then, it propagates the error from the output layers, back to the initial layers, one layer at a time, in order to update the weights of the neuron connections to minimize the error $E$. The weights are updated conforming Equation \ref{eq:bp}
 
 \begin{equation}
 w(t+1) = w(t) - \alpha\ \Delta\ E(w(t))
@@ -105,8 +104,7 @@ The sigmoid activation function is a non-linear function in the range of $]0, 1[
 f(x) = \frac{1}{1+e^{-x}}
 \label{eq:sigmoid}
 \end{equation}
-It takes a real-valued number and transforms it to the range between 0 and 1. In particular, large negative numbers become 0 and large positive numbers become 1. The sigmoid function has seen frequent use historically since it has a natural interpretation as the firing rate of a neuron: from not firing at all (0) to fully-saturated firing at an assumed maximum frequency (1). 
-
+It takes a real-valued number and transforms it to the range between 0 and 1. Small negative numbers become 0 and large positive numbers become 1. 
 \subsubsection{Tanh}
 
 The Hyperbolic Tangent (tanh) non-linearity is shown in Figure \ref{fig:activation} (b) and is defined in Equation \ref{eq:tanh}. It limits a real-valued number to the range of $[-1, 1]$. 
@@ -115,18 +113,18 @@ f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
 \label{eq:tanh}
 \end{equation}
 
-\subsubsection{ReLU}
+\subsubsection{Rectified Linear Unit}
 
-The Rectified Linear Unit has become very popular in the last few years. It computes the function 
+The Rectified Linear Unit (ReLU) has become very popular in the last few years and was one of the main discoveries that enabled the training of deeper neural networks. It computes the function 
 \begin{equation}
 f(x)=max \: (0,x)
 \label{eq:relu}
 \end{equation}
 in other words, the activation is simply thresholded at zero, see Figure \ref{fig:activation} (c). 
 
-\subsubsection{LReLU}
+\subsubsection{Leaky Rectified Linear Units}
 
- Leaky ReLU is one attempt to fix the “dying ReLU” problem. Instead of the function being zero when x < 0, a leaky ReLU will instead have a small negative slope (of 0.01, or so). That is, the function computes where $\alpha$ is a small constant. Some people report success with this form of activation function, but the results are not always consistent. 
+Leaky Rectified Linear Units (LReLU) is an attempt to improve the ReLU. Instead of the function being zero when $x < 0$, a leaky ReLU will instead have a small negative slope (around 0.01). The function computes
 
 \begin{equation}
 f(x)=\begin{cases}
@@ -135,30 +133,9 @@ f(x)=\begin{cases}
     \end{cases}
 \label{eq:lrelu}
 \end{equation}
-Figure \ref{fig:activation} (d)
 
-%\begin{equation}
-%f(x)=
-%\begin{cases}
-%      0, & \text{if}\ a=1 \\
-%      1, & \text{otherwise}
-%    \end{cases}
-%%\begin{cases}
-%%   
-%%   \text{x} &\quad\text{if} x>= 0
-%%\end{cases}
-%
-%
-%\label{eq:relu}
-%\end{equation}
+where $\alpha$ is a small constant, see Figure \ref{fig:activation} (d). 
 
-% https://people.eecs.berkeley.edu/~jonlong/long_shelhamer_fcn.pdf
-%Convolutional networks are driving advances in recognition.
-%Convnets are not only improving for whole-image
-%classification [22, 34, 35], but also making progress on local
-%tasks with structured output. These include advances
-%in bounding box object detection [32, 12, 19], part and keypoint
-%prediction [42, 26], and local correspondence [26, 10].
 
 \section{Deep Neural Networks}
 Deep architectures are characterized by the multiple levels of non-linear operations
@@ -199,7 +176,7 @@ define a small area (e.g., 3x3 or 5x5 pixels), and each neuron is connected only
 nearby neurons (in this area) in the previous layer. The weights are shared across neurons,
 leading the filters to learn frequent patterns that occur in any part of the image.
 
-The definition for a 2D convolution layer is presented in Equation \ref{eq:cnn}. A 2D convolution layer is the application of a discrete convolution of the inputs $y^{(l-1)}$ with a filter $w^{(l)}$, adding a bias $b_{(l)}$ , followed by the application of a activation function $f$:
+The definition for a 2D convolution layer is presented in Equation \ref{eq:cnn}. A 2D convolution layer is the application of a discrete convolution of the inputs $y^{(l-1)}$ with a filter $w^{(l)}$, adding a bias $b_{(l)}$ , followed by the application of an activation function $f$:
 
 \begin{equation}
 y^{(l)}_{rc} = f(\sum_{i=1}^{N_{r}} \sum_{j=1}^{N_{c}} y^{(l-1)}_{(r+i-1)(c+j-1)} w^{(l)}_{ij} + b^{(l)} )
@@ -219,7 +196,7 @@ $s$ are used, which is called the stride. A stride $s = 2$ \footnote{Animated re
 \subfloat[Convolving a 3x3 kernel over a 5x5 input, with 2x2 stride.] {\includegraphics[width=\textwidth]{conv-operation-strides}}
 
 
-\caption{Extracted from \cite{dumoulin2016guide}.} \label{fig:convop}
+\caption{Convolution operation with (a) stride 1x1 and (b) stride 2x2. Extracted from \cite{dumoulin2016guide}.} \label{fig:convop}
 \end{figure}
 
 
@@ -228,7 +205,9 @@ $s$ are used, which is called the stride. A stride $s = 2$ \footnote{Animated re
 The Fully Convolutional Network (FCN) \cite{long2015fully} is a CNN modified for dense
 predictions. This architecture was developed under the observation that although a typical CNN is designed for spatial inputs, such as images, it normally discard spatial information in their fully connected layers (FC). 
 
-FCNs are, thus, rooted in the observation that spatial filters, which are learned during the CNN training, are useful for extracting low-level features, but FC layers are needed to incorporate high-level reasoning. The main idea of the FCN architecture is to convert the FC layers of a CNN into convolutional layers, expecting that the network retains the ability to learn high-level information and at the same time preserve spatial information. The FCN becomes, therefore, ``fully convolutional'' by having end-to-end convolutional layers. While CNNs are typically built in a sequence of convolutional, pooling, and fully connected layers, FCN adds an expanding path built with a transposed convolutional layer \cite{long2015fully}. The expanding path recovers spatial information by merging features skipped from the various resolution levels on the contracting path.
+FCNs are, thus, rooted in the observation that spatial filters, which are learned during the CNN training, are useful for extracting low-level features, but FC layers are needed to incorporate high-level reasoning. The main idea of the FCN architecture is to convert the FC layers of a CNN into convolutional layers, expecting that the network retains the ability to learn high-level information and at the same time preserve spatial information. The FCN becomes, therefore, ``fully convolutional'' by having end-to-end convolutional layers. 
+
+While CNNs are typically built in a sequence of convolutional, pooling, and fully connected layers, FCN adds an expanding path built with a transposed convolutional layer \cite{long2015fully}. The expanding path recovers spatial information by merging features skipped from the various resolution levels on the contracting path.
 
 Unlike a CNN, which learns a general, nonlinear function that characterizes the input, FCNs learn an end-to-end nonlinear mapping from one input image to another. Because pixel-wise prediction is used, the label space is also transformed from a scalar to a two-dimensional image, where each pixel value represents the object class of its corresponding input pixel. An FCN with an input image and label is illustrated in Figure \ref{fcn-arch}
 
@@ -244,18 +223,9 @@ per-pixel tasks. Extracted from \cite{long2015fully}}
 \subsection{Transposed Convolution}
 %https://arxiv.org/pdf/1603.07285.pdf p 19
 
-Transposed convolutions - also called deconvolution or backward convolution - work
-by swapping the forward and backward passes of a convolution. One way to put
-it is to note that the kernel defines a convolution, but whether it is a direct
-convolution or a transposed convolution is determined by how the forward and
-backward passes are computed.
+Transposed convolutions - also called deconvolution or backward convolution - work by swapping the forward and backward passes of a convolution. One way to put it is to note that the kernel defines a convolution, but whether it is a direct convolution or a transposed convolution is determined by how the forward and backward passes are computed \cite{dumoulin2016guide}.
 
-The need for transposed convolutions arises from the desire to use a
-transformation going in the opposite direction of a normal convolution, i.e., from
-something that has the shape of the output of some convolution to something
-that has the shape of its input while maintaining a connectivity pattern that
-is compatible with said convolution. For instance, one might use such a transformation
-as the decoding layer of an FCN or project feature maps to a higher-dimensional space. Figure \ref{fig:transposed} illustrates the general backwards convolution process \cite{dumoulin2016guide}.
+For instance, one might use such a transformation as the decoding layer of an FCN or project feature maps to a higher-dimensional space. Figure \ref{fig:transposed} illustrates the general backwards convolution process \cite{dumoulin2016guide}.
 
 \begin{figure}[!htb]
 \centering
@@ -275,7 +245,7 @@ When the training of the neural network starts, the initial values of the weight
 The uniform initialization is the most simple. The model parameters are initialized through a random distribution in the range of $[l1, l2]$, where $l1$ and $l2$ are two constants.
 
 \subsubsection{Glorot}
-This weight initialization technique was proposed in \cite{glorot2010understanding}. The dynamic of the activation functions and the gradients weights were studied, and they found that the neural network converges faster using the weight initialization described in Equation \ref{eq:glorot}.
+This weight initialization technique was proposed in \cite{glorot2010understanding}. The dynamic of the activation functions and the gradients weights were studied, and they found the neural network converges faster using the weight initialization described in Equation \ref{eq:glorot}.
 
 \begin{equation}
 W \sim U \; \left[\sqrt{\frac{6}{f_{in}+f_{out}}}\; \right] 
@@ -283,36 +253,39 @@ W \sim U \; \left[\sqrt{\frac{6}{f_{in}+f_{out}}}\; \right]
 \end{equation}
 where $W$ are the weights, $U$ is an uniform distribution, and $f_{in}$ and $f_{out}$ are the number of units in the previous layer and the next layer, respectively.
 
-\subsection{Optimization algorithm}
-Training the network consists in minimizing the error function, based on the gradients of the parameters with relation to the cost function, by updating the weights and biases, expecting that the network learn how to perform the task it is being trained for.
+\subsection{Optimization algorithms}
+Training the network consists in minimizing the error function, based on the gradients of the parameters with relation to the cost function, by updating the weights and biases, expecting that the network learns how to perform the task it is being trained for.
 
 \subsubsection{Stochastic Gradient Descent}
 
 The Stochastic Gradient Descent (SGD) algorithm, as defined in \cite{bishop2006pattern} can be summarized a series of iterations over mini-batches of the dataset, performing forward-propagation
-followed by a back-propagation to calculate the error derivatives with respect to the
-parameters. The weights are updated using these derivatives and a new mini-batch is
-used. This procedure is repeated until a convergence criterion is reached. Common
-convergence criteria are: a maximum number of epochs (number of times that the whole
-training set was used); a desired value for the cost function is reached; or training until
-the cost function shows no improvement in a number of iterations.
+followed by a back-propagation to calculate the error derivatives with respect to the parameters. The weights are updated using these derivatives, and a new mini-batch is used. This procedure is repeated until a convergence criterion is  reached. Common convergence criteria are a maximum number of epochs (number of times that the whole training set was used); a desired value for the cost function is reached, or training until the cost function shows no improvement in a number of iterations.
 
 \subsubsection{Adaptive Moment Estimation}
-The Adaptive Moment Estimation (ADAM) is a stochastic optimization method that can adaptively tune the learning rate per parameter and also has a momentum term \cite{polyak1964some}. Equations \ref{adamstart} to \ref{adamend} describe how the parameters are updated using this method.
+The Adaptive Moment Estimation (ADAM) \cite{kingma2014adam} is a stochastic optimization method that can adaptively tune the learning rate per parameter and also keeps an exponentially decaying average of past gradients $m_t$ and $v_t$:
 
-\begin{subequations}\label{eq:adam}
+\begin{subequations}
 \begin{gather}
-m_{t} = \beta_{1} m_{t-1} + (1-B_{1})f'(w_{t-1}) \label{adamstart}
-\\
-m_{t}^2 = \beta_{2} m_{t-1}^2 + (1-B_{2})f'(w_{t-1})^2
-\\
-\hat{m}_{t} = \dfrac{m_{t}}{1-\beta_{1}^t}
-\\
-\hat{m}_{t}^2 = \dfrac{m_{t}^2}{1-\beta_{2}^t}
-\\
-w = w_{t-1} - \alpha \dfrac{\hat{m}_{t}}{ 
-\sqrt{\hat{m}_{t}^2} + \epsilon 
-}
+\label{adamfirst}
+m_t = \beta_1 m_{t-1} + (1 - \beta_1) g_t \\   
+v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2  
+\end{gather}
+\end{subequations}
+where $m_t$ and $v_t$ are estimates of the first moment and the second moment of the gradients respectively, $\beta_1$ and $\beta_2$ are the decay rate and $g$ is the gradient with respect to $w$. 
+
+The authors observed that the moments are biased towards zero, especially during the initial time steps. They work around these biases by computing bias-corrected estimates:
+\begin{subequations}
+\begin{gather}
+\hat{m}_t=\dfrac{m_t}{1 - \beta^t_1} \\
+\hat{v}_t=\dfrac{v_t}{1 - \beta^t_2}
 \label{adamend}
 \end{gather}
 \end{subequations}
+Then, they use these computed variables to update the parameters:
+\begin{equation}
+w_{t+1} = w_{t} - \alpha \dfrac{\hat{m}_t}{\sqrt{\hat{v}_t} + \epsilon} 
+\label{adamend2}
+\end{equation}
+The authors propose default values of 0.9 for $\beta_1$, 0.999 for $\beta_2$, and $10^{-8}$ for $\epsilon$.
+
 
