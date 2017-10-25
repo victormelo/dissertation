@@ -128,7 +128,9 @@ For every convolutional layer we use a stride (the distance between applications
 We trained the model using the Adam optimizer to minimize the minimum squared error (MSE) loss for 100 epochs, using a learning rate of 0.001, and mini-batches of size 16. We used 22000 samples from the IRONOFF to train the model and another 1000 samples as validation data. The network was trained using the library Tensorflow and took around five days to train on a GTX 670 GPU.
 
 \section{Training Results}
-The MSE loss on the validation set over the 100 training epochs can be seen in Figure \ref{fig:trainingMSE}. We can see that the loss was varying from around 0.002 to 0.001 from epoch 20 until the last epoch. Figure \ref{fig:resultingsamples} shows a visual representation of the predictions, alongside the expected output. 
+The MSE loss on the validation set over the 100 training epochs can be seen in Figure \ref{fig:trainingMSE}. We can notice that the MSE loss starts at 0.007 on the first epoch, and decreases until epoch 20 where it starts varying from around 0.002 to 0.001 until the last epoch. 
+
+A visual representation of the last epoch model predictions, alongside the expected output is shown in Figure \ref{fig:resultingsamples}. 
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.8\textwidth]{iterations}
@@ -168,4 +170,4 @@ The MSE loss on the validation set over the 100 training epochs can be seen in F
 \caption{A not cherry-picked selection of synthetic manuscripts produced using our proposed method alongside the expected output, i.e. the groundtruth.} \label{fig:resultingsamples}
 \end{figure}
 
-We can observe that the synthetic samples are similar to the expected output, however, in order to make an objective evaluation of the quality of the synthetic generation, in the context of handwritten signatures, we performed a machine-oriented evaluation. In the next chapter, we describe the protocol we followed and then we report an objective measure of the quality of our proposed method based on this experimental setup.
+In order to make an objective evaluation of the quality of the synthetic generation, in the context of handwritten signatures, we performed a machine-oriented evaluation. In the next chapter, we describe the protocol we followed and then we report an objective measure of the quality of our proposed method based on this experimental setup.
