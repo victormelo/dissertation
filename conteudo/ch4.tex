@@ -3,26 +3,28 @@
 \chapter{Proposed Method}\label{ch:method}
 
 
-One could synthesize an offline signature 2D image by linearly ``joining the dots''  of the sample points of the pen trajectory, representing the drawn pen position, in addition to applying some morphological operators to enlarge the tracing to the desired stroke width. However, this may not produce an optimal output concerning the fidelity to the original (i.e., the accuracy of the recreated image when compared against the original signature image). Moreover, the grayscale information would still be missing, which was shown \cite{vargas2010off} to yield better recognition rate results than only the binary offline signature.
+Given a dynamic signature, the simplest way to obtain the corresponding static sample is to draw $(x, y)$ coordinates and performing a simple interpolation in order to get a continuous trajectory. The problem of this approach is that other dynamic information (e.g. velocity, pressure, etc.) do not contribute in the transformation process, so that the offline version will result in a poor execution.
 
-Although some methods have already been proposed to create synthetic offline signatures taking into account the dynamic information to create grayscale images, the methods that have been proposed are ``rule-based'' estimations of how the pen point should be modeled on the paper. We propose a method that learns from data how this transformation is made. 
- 
-Figure \ref{fig_approach} shows how the proposed approach is used to generate a static signature-based on online data. In this chapter, we describe our proposed method. First, the dataset used to train our model is described, then we describe how we preprocessed the dataset. Afterwards, the FCN model trained to learn an end-to-end mapping from the dynamic information to the static representation of the signature is detailed.
+Some more complex methods have already been proposed, nevertheless, these methods are “rule-based”. Here we propose a method that learns from data how to perform the transformation having samples of both dynamic and static signatures. 
+
+Figure \ref{fig_method}  shows the workflow of the proposed approach to generate a static signature-based on online data. In this chapter, we describe our proposed method. First, the dataset used to train our model is described, then we describe how we preprocessed the dataset. Afterwards, the FCN model trained to learn an end-to-end mapping from the dynamic information to the static representation of the signature is detailed.
 
 \begin{figure}[!htb]
-\centering
-\includegraphics[width=0.8\textwidth]{method}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-\caption{The proposed approach diagram and an example of the synthetic signature generation.}
-\label{fig_approach}
+	\centering
+	\includegraphics[width=3.6in]{method}
+	% where an .eps filename suffix will be assumed under latex,
+	% and a .pdf suffix will be assumed for pdflatex; or what has been declared
+	% via \DeclareGraphicsExtensions.
+	\caption{The proposed approach diagram and an example of the synthetic signature generation.}
+	\label{fig_method}
 \end{figure}
 
-\section{Online to offline training data}
-In order to train our Neural Network to perform the approximation task of ``online to offline conversion,'' we need both the online version of a manuscript containing the trajectory and pressure information mapped to the respective resulting offline representation, as in Figure \ref{fig:offon}. In order to acquire the online trajectory as well as the digital image for the same handwriting signal, some points have to be considered.
 
-The acquisition phase of such dual dataset requires some extra steps. A paper form must be placed over a digital tablet to be filled with an electronic ink-pen. Then, the dynamic data is captured through the tablet, and the paper form might be scanned to provide the offline image, Figure \ref{fig:dualonoff} illustrates this setup. Thereby, two complementary files are available. One contains the dynamic information, and the other one is the digital image of this piece of handwritten signature produced by the scanner. 
+
+\section{Online to Offline Training Data}
+In order to train our Neural Network to perform the approximation task of ``online to offline conversion,'' we need both the online version of a manuscript containing the trajectory and pressure information mapped to the respective resulting offline representation, as in Figure \ref{fig:offon}. Of course the mapping is a major problem since the two acquisition systems (digitizing tablet and optical scanner) process the writing signal separately, each having its particular parameters (Cartesian axis, scale, etc.). 
+
+Moreover, the acquisition phase of such dual dataset requires some extra steps. A paper form must be placed over a digital tablet to be filled with an electronic ink-pen. Then, the dynamic data is captured through the tablet, and the paper form might be scanned to provide the offline image, Figure \ref{fig:dualonoff} illustrates this setup. Thereby, two complementary files are available. One contains the dynamic information, and the other one is the digital image of this piece of handwritten signature produced by the scanner. 
 \begin{figure}[!htb]
 \centering
 \includegraphics[width=0.7\textwidth]{dualonoff}
@@ -90,7 +92,7 @@ Figure \ref{fig_ironoff} shows what is the result of the preprocessed input and 
 
 
 
-\section{Neural Network model}
+\section{Neural Network Model}
 
 Our model is based on the fully convolutional neural network architecture, adopted to learn an end-to-end nonlinear mapping from online representation to the static image. Our Neural Network model is fed with the interpolated online sample pressure information and we expect the respective offline sample on the output, i.e., the input is the pressure information and the desired output is the static manuscript.
 

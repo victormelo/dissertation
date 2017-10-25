@@ -1,9 +1,10 @@
 %!TEX root = ../dissertation_vkslm.tex
 
 \chapter{Conclusion and Future Works}\label{ch:conclusion}
-This work proposes a method to synthesize offline signatures from dynamic information as a supervised learning task. We propose a Fully Convolutional Neural Network to learn an end-to-end mapping of online manuscripts to the static domain, taking advantage of the data present in the IRONOFF dataset during the training phase of the Neural Network. 
 
-We show that, in contrast to what has already been proposed, it is possible to model the "online to offline signature" as a learning from data task. Our Deep Neural Network model learns how the online biometric data must be used to build the grayscale signature image. Furthermore, we also observe that our proposed method synthetic offline signatures offer a verification performance similar to the one offered by real signatures and we show that the synthetic signatures present high discriminative power when used to increase the enrollment set under the skilled forgeries scenario. 
+In this work a method to produce synthetic offline signatures by means of a supervised learning task has been presented. We propose a Fully Convolutional Neural Network to learn an end-to-end mapping of online manuscripts to the static domain, taking advantage of the data present in the IRONOFF dataset during the training phase of the Neural Network. 
+
+We show that, in contrast to what has already been proposed, it is possible to model the "online to offline signature" as a learning from data task. Our Deep Neural Network model learns how the online biometric data must be used to build the grayscale signature image.  The use of synthetically generated signatures offers verification performance similar to those observed by using real signatures. We also show that the synthetic signatures generated with our proposed method present high discriminative power when used to increase the enrollment set under the skilled forgeries scenario. 
 
 Future work can explore the optimization of the hyper-parameters of the FCN (such as the number of layers, number of neurons per layer) since these hyper-parameters were fixed during the experiments in the present work. Besides, we intend to explore the combination of real online and synthetically generated offline signatures using the proposed method, when only the online information is available, towards improved recognition results on a dynamic signature verifier.
 

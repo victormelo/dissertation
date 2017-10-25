@@ -84,7 +84,7 @@ w(t+1) = w(t) - \alpha\ \Delta\ E(w(t))
 \end{equation}
 where $E$ is the error measure defined as loss sum over the entire training set, and $t$ indicates iterations (time steps). The $\Delta(E)$ is the gradient vector, which is computed by applying the chain rule on the layers of the NN \cite{rumelhart1985learning}. The parameter $\alpha$ is a heuristic, called learning rate. The learning rate values help to avoid convergence to a local-minimum or maximum point. In order to secure the convergence of the backpropagation training algorithm and avoid oscillations in a steep direction of the error surface, a small learning rate is chosen $(0 < \alpha < 1)$.
 
-\subsection{Activation functions}
+\subsection{Activation Functions}
 \begin{figure}[!htb]
 \centering
  \subfloat[Sigmoid]{\includegraphics[width=2.5in]{sigmoid}} 
@@ -143,7 +143,7 @@ contained on a neural network. While many of the early successful applications o
 
 It was observed in many experiments that deep networks are harder to train than shallow networks, and that training deep networks often get stuck in apparent local minima (or plateaus) when starting with random initialization of the network parameters. Deep Neural Networks have been investigated for decades, but training deep networks consistently yielded poor results. 
 
-The proposal of the Convolutional Neural Network \cite{lecun1995convolutional} and some recent theoretical discoveries made training deep neural networks feasible. The CNN is a particular type of deep, feedforward neural network that is easier to train and generalized better than networks with full connectivity between adjacent layers \cite{lecun2015deep}. Besides, the theoretical findings include unsupervised training of the layers \cite{hinton2006fast}, Rectifier Linear Unit (ReLU) \cite{nair2010rectified} as the activation function and the regularization technique dropout \cite{srivastava2014dropout}. 
+The proposal of the Convolutional Neural Network \cite{lecun1995convolutional} and some recent theoretical discoveries made training deep neural networks feasible. The CNN is a particular type of deep, feedforward neural network that is easier to train and generalized better than networks with full connectivity between adjacent layers \cite{lecun2015deep}. Besides, the theoretical findings include unsupervised training of the layers \cite{hinton2006fast}, Rectifier Linear Unit (ReLU) \cite{nair2010rectified} as the activation function and the regularization techniques Dropout \cite{srivastava2014dropout} and Batch Normalization \cite{ioffe2015batch}. 
 
 
 \section{Convolutional Neural Networks}
@@ -236,9 +236,9 @@ For instance, one might use such a transformation as the decoding layer of an FC
 an upsampled image (green). Here a stride of one is used, illustrated from left to right. Extracted from \cite{dumoulin2016guide}.} \label{fig:transposed}
 \end{figure}
 
-\section{Neural Networks training}
+\section{Deep Neural Networks Training}
 
-\subsection{Weight initialization}
+\subsection{Weight Initialization}
 When the training of the neural network starts, the initial values of the weights and biases need to be provided. Some techniques to weight initialization have been proposed and shown to be useful to smooth the model convergence.
 
 \subsubsection{Uniform}
@@ -253,7 +253,7 @@ W \sim U \; \left[\sqrt{\frac{6}{f_{in}+f_{out}}}\; \right]
 \end{equation}
 where $W$ are the weights, $U$ is an uniform distribution, and $f_{in}$ and $f_{out}$ are the number of units in the previous layer and the next layer, respectively.
 
-\subsection{Optimization algorithms}
+\subsection{Optimization Algorithms}
 Training the network consists in minimizing the error function, based on the gradients of the parameters with relation to the cost function, by updating the weights and biases, expecting that the network learns how to perform the task it is being trained for.
 
 \subsubsection{Stochastic Gradient Descent}
