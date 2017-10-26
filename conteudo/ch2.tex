@@ -60,7 +60,7 @@ In order to train the model, an objective function, also called loss function, i
 This function measures the compatibility between a prediction (e.g., the class scores in classification) and the ground truth label. The
 objective of the training is to minimize the sum (or, equivalently, the mean) of
 this error function applied to all examples in the dataset. Commonly used loss functions
-are the Mean Squared Error function (MSE), and the Cross-Entropy (CE). Equations \ref{eq:mse} and \ref{eq:ce} describe the MSE and CE, respectively, for an sample of the dataset.
+are the Mean Squared Error function (MSE), and the Cross-Entropy (CE). Equations \ref{eq:mse} and \ref{eq:ce} describe the MSE and CE, respectively, for a sample of the dataset,
 
 \begin{equation}
 E =  \frac{1}{N} \sum_{c}^{N} (t_{(c)} - y^{}_{(c)} )^2 
@@ -70,9 +70,7 @@ E =  \frac{1}{N} \sum_{c}^{N} (t_{(c)} - y^{}_{(c)} )^2
 \begin{equation}
 E = - \sum_{c}^{N} (t_{(c)} \: log \: y^{}_{(c)} )^2 
 \label{eq:ce}
-\end{equation}
-
-where $y^{}_{(c)}$ is the output of unit $c$ in the last layer, $t_{(c)}$
+\end{equation} where $y^{}_{(c)}$ is the output of unit $c$ in the last layer, $t_{(c)}$
 the true label $t$ for unit $c$ and $N$ is the number of units on the last layer.
 \subsection{Backpropagation}
 The phase called backpropagation consists in minimizing the error $E$ between the network output and the expected target. The algorithm works by calculating the derivatives of the error
@@ -107,7 +105,7 @@ f(x) = \frac{1}{1+e^{-x}}
 It takes a real-valued number and transforms it to the range between 0 and 1. Small negative numbers become 0 and large positive numbers become 1. 
 \subsubsection{Tanh}
 
-The Hyperbolic Tangent (tanh) non-linearity is shown in Figure \ref{fig:activation} (b) and is defined in Equation \ref{eq:tanh}. It limits a real-valued number to the range of $[-1, 1]$. 
+The Hyperbolic Tangent (tanh) non-linearity is shown in Figure \ref{fig:activation} (b) and is defined in Equation \ref{eq:tanh}. It limits a real-valued number to the range of $[-1, 1]$
 \begin{equation}
 f(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}
 \label{eq:tanh}
@@ -132,9 +130,7 @@ f(x)=\begin{cases}
       x, & \text{otherwise}
     \end{cases}
 \label{eq:lrelu}
-\end{equation}
-
-where $\alpha$ is a small constant, see Figure \ref{fig:activation} (d). 
+\end{equation} where $\alpha$ is a small constant, see Figure \ref{fig:activation} (d). 
 
 
 \section{Deep Neural Networks}
