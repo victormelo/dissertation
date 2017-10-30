@@ -9,10 +9,9 @@ based on online data.
 
 \section{Handwritten Signature: a behavioral multimodal biometry}
 
-The term ``Biometrics'' is derived from the Greek word ``bio-metriks''. In which ``bio'' means ``life'' and ``metrics'' means ``to measure''. Biometrics refers to the measurements and statistical analysis of unchanging biological characteristics peculiar to an individual. Biometric systems are
-a constantly growing technology \cite{jain2004biometrics} and have been introduced as forms of identification and access control. Biometric identifiers are a measurable characteristic used to distinguish and describe individuals \cite{jain2000biometric}. 
+The term ``Biometrics'' is derived from the Greek word ``bio-metriks''. In which ``bio'' means ``life'' and ``metrics'' means ``to measure''. Biometrics refers to the measurements and analysis of biological or behavioral characteristics peculiar to an individual. Biometric systems are a constantly growing technology \cite{jain2004biometrics} and have been introduced as forms of identification and access control. Biometric identifiers are a measurable characteristic used to distinguish and describe individuals \cite{jain2000biometric}. 
 
-Biometric systems are often categorized as physiological or behavioral \cite{ross2008introduction}. The physiological category is characterized by measurements of the body. Examples include fingerprint, palm veins, face recognition, DNA, palm print, hand geometry, iris/retina pattern, and body scent. On the other hand, behavioral biometrics are individual acquired traits and are related to the pattern of behavior of a person. They include typing rhythm, gait, temperament, voice, and handwritten signatures \cite{jain2016}.
+Biometric systems are often categorized as physiological or behavioral \cite{ross2008introduction}. The physiological category is characterized by measurements of the body, such as fingerprint, face, DNA, iris/retina pattern, and body scent. On the other hand, behavioral biometrics are individual acquired traits and are related to the pattern of behavior of a person. They include typing rhythm, temperament, voice, and handwritten signatures \cite{jain2016}.
 
 Most biometric identifiers require a special type of device for security and control of human identity. However, handwritten signature based biometric systems can be performed requiring no sensor except a pen and a piece of paper. According to \cite{pal2014signature} handwritten signatures can be considered the most legally and socially attributes accepted for person identification. Moreover, the challenge that comes with signature-based authentication is the need for high accuracy results to avoid false authorization or rejection.
 
@@ -44,7 +43,7 @@ In the static modality, also referred as offline, an optical scanner is used to 
 \caption{Different signature acquisition methods. (a) a signature scanned from paper and (b) digitizing tablet Wacom STU-500 \cite{wacom2016}. } \label{fig:acquisition}
 \end{figure}
 
-Specifically, the online modality does not convey information about the overall shape of the signature, the width of the strokes and the texture of the ink on the paper \cite{diaz2014generation}. The offline representation, however, has lost all dynamic information about the manner in which the signature is signed during the acquisition process. As a result, features such as pen trajectory, which can be easily computed in the online domain, can only be inferred from a static image \cite{nel2005estimating}. An example of a colored offline signature and a plotted matching online signature can be found in Figure \ref{fig:offon}. 
+Specifically, the online modality does not convey information about the overall shape of the signature, the width of the strokes and the texture of the ink on the paper \cite{diaz2014generation}. The offline representation, however, has lost all dynamic information about the manner in which the signature is signed during the acquisition process. As a result, features such as pen trajectory, which can be easily computed in the online domain, can only be inferred from a static image \cite{nel2005estimating}. In Figure \ref{fig:offon} we can see a grayscale offline signatures example and the respective online signature plot. 
 
 \begin{figure}[!htb]
 \centering
@@ -80,7 +79,7 @@ In the field of signature verification, forgeries are usually classified into tw
 \begin{itemize}
 \item The first one is the random forgery which is created in a situation which an impostor who has no information about the person or the shape of the original signature tries to verify the identity of a signer using his signature instead of the signature to be tested. The forger does not attempt to simulate or trace a genuine signature.
 
-\item The second type is the skilled forgery, in which the forger tries and practices imitating as closely as possible the static and dynamic information of the genuine signature model. The forger has access for both the user’s name and signature and tries to reproduce it with a similar intra-class variability.
+\item The second type is the skilled forgery, in which the forger tries and practices imitating as closely as possible the static and dynamic information of the genuine signature model. The forger has access to both the user’s name and signature and tries to reproduce it with a similar intra-class variability.
 \end{itemize}
 
 
@@ -100,15 +99,13 @@ In the first step, the signatures are acquired and preprocessed, the main goal h
 Verification errors occurring in AHSVS are usually categorized as two types \cite{fairhurst1997signature}. On the one hand, a genuine signer may be rejected by the system as a potential impostor (e.g., it could happen when the signer carelessly executes his/her signature), resulting in what is denoted a Type-1 error or False
 Rejection. On the other hand, a skilled forger might be able to produce a sample which would be accepted as genuine, resulting in what is called a Type-2 error or False Acceptance. 
 
-The performance of signature verification systems can be improved by increasing the number of samples in the training dataset. The amount of data available for each user is often insufficient in real applications. During the enrollment phase,
-users are often required to supply only a few samples of their signatures. In other words, even if there is a significant number of users enrolled in the system, a classifier needs to perform well for a new user, for whom only a small set of samples are available. Since the acquisition and distribution of real signatures arise legal and privacy concerns \cite{diaz2014generation}, the use of realistic synthetic signatures could be
-regarded as a good alternative. 
+The performance of signature verification systems can be improved by increasing the number of samples in the training dataset. The amount of data available for each user is often insufficient in real applications. Even if there is a significant number of users enrolled in the system, a classifier needs to perform well for a new user, for whom only a small set of samples are available.
 
 \section{Off-line Signature Synthesis Using On-line Samples}
 
-According to \cite{guest2013assessment}, although online samples can be stored as a time-series for use in any form of an AHSVS, there are situations where it might be needed to represent the data as an image reproducing the original static signature. 
+According to \cite{guest2013assessment}, although online signature samples can be effectively stored as a time-series for use in any form of an AHSVS, there may be a situation where the signature might be needed to be represented as an image. 
  
-One possible scenario is for human visualization. A legal document (for instance, a driving license or voter id) may require an image-based representation of a signature to be presented using the data captured as part of a biometric system and stored in format. There may also be a case where the modality of the signature used for training the user model differs from the signature domain that is being questioned. Although the test sample is a genuine signature, it might not be possible to prove with either an offline or online signature verification system alone. Hence, converting either the training or questioned data into an image reproducing the original static signature would be useful for the development of an integrated version of an offline and online signature verification systems, overcoming the dynamic vs. static dichotomy, and unifying the signature biometry \cite{chapter}.
+One possible scenario is for human visualization. For instance, in a context of a legal document, it may be required to have a image-based representation of signature that was captured in a biometric system and stored as a time-series. There may also be a case where the modality of the signature used for training the user model differs from the signature domain that is being questioned. Although the test sample is a genuine signature, it might not be possible to prove with either an offline or online signature verification system alone. Hence, converting either the training or questioned data into an image reproducing the original static signature would be useful for the development of an integrated version of an offline and online signature verification systems, overcoming the dynamic vs. static dichotomy, and unifying the signature biometry \cite{chapter}.
 
 The works proposed in the literature to generate signature images from online signatures, generally apply different transforms to the dynamic information taking into account the kinematic and the timing order in which the traces were registered, then the samples of the new specimen are interpolated in order to create new images. 
 

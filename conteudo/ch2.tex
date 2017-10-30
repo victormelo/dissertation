@@ -57,7 +57,7 @@ where $W^{(l)}$ is a matrix of weights assigned to each pair of neurons from lay
 \subsection{Loss Function}
 %control c control v
 In order to train the model, an objective function, also called loss function, is defined.
-This function measures the compatibility between a prediction (e.g., the class scores in classification) and the ground truth label. The
+This function measures the compatibility between a prediction and the ground truth label. The
 objective of the training is to minimize the sum (or, equivalently, the mean) of
 this error function applied to all examples in the dataset. Commonly used loss functions
 are the Mean Squared Error function (MSE), and the Cross-Entropy (CE). Equations \ref{eq:mse} and \ref{eq:ce} describe the MSE and CE, respectively, for a sample of the dataset,
@@ -80,7 +80,7 @@ function with respect to the model’s parameters (weights and biases). Then, it
 w(t+1) = w(t) - \alpha\ \Delta\ E(w(t))
 \label{eq:bp}
 \end{equation}
-where $E$ is the error measure defined as loss sum over the entire training set, and $t$ indicates iterations (time steps). The $\Delta(E)$ is the gradient vector, which is computed by applying the chain rule on the layers of the NN \cite{rumelhart1985learning}. The parameter $\alpha$ is a heuristic, called learning rate. The learning rate values help to avoid convergence to a local-minimum or maximum point. In order to secure the convergence of the backpropagation training algorithm and avoid oscillations in a steep direction of the error surface, a small learning rate is chosen $(0 < \alpha < 1)$.
+where $E$ is the error measure defined as loss sum over the entire training set, and $t$ indicates iterations (time steps). The $\Delta(E)$ is the gradient vector, which is computed by applying the chain rule on the layers of the NN \cite{rumelhart1985learning}. The parameter $\alpha$ is a heuristic, called learning rate. The learning rate values help to avoid convergence to a local-minimum or maximum point. 
 
 \subsection{Activation Functions}
 \begin{figure}[!htb]
@@ -118,7 +118,7 @@ The Rectified Linear Unit (ReLU) has become very popular in the last few years a
 f(x)=max \: (0,x)
 \label{eq:relu}
 \end{equation}
-in other words, the activation is simply thresholded at zero, see Figure \ref{fig:activation} (c). 
+this activation function can be simply regarded as a threshold at zero, see Figure \ref{fig:activation} (c). 
 
 \subsubsection{Leaky Rectified Linear Units}
 
@@ -219,9 +219,7 @@ per-pixel tasks. Extracted from \cite{long2015fully}}
 \subsection{Transposed Convolution}
 %https://arxiv.org/pdf/1603.07285.pdf p 19
 
-Transposed convolutions - also called deconvolution or backward convolution - work by swapping the forward and backward passes of a convolution. One way to put it is to note that the kernel defines a convolution, but whether it is a direct convolution or a transposed convolution is determined by how the forward and backward passes are computed \cite{dumoulin2016guide}.
-
-For instance, one might use such a transformation as the decoding layer of an FCN or project feature maps to a higher-dimensional space. Figure \ref{fig:transposed} illustrates the general backwards convolution process \cite{dumoulin2016guide}.
+Transposed convolutions - also called deconvolution or backward convolution - work by swapping the forward and backward passes of a convolution. Whether it is a direct convolution or a transposed convolution is determined by how the forward and backward passes are computed \cite{dumoulin2016guide}. Figure \ref{fig:transposed} illustrates the general backwards convolution process \cite{dumoulin2016guide}.
 
 \begin{figure}[!htb]
 \centering
@@ -269,7 +267,7 @@ v_t = \beta_2 v_{t-1} + (1 - \beta_2) g_t^2
 \end{subequations}
 where $m_t$ and $v_t$ are estimates of the first moment and the second moment of the gradients respectively, $\beta_1$ and $\beta_2$ are the decay rate and $g$ is the gradient with respect to $w$. 
 
-The authors observed that the moments are biased towards zero, especially during the initial time steps. They work around these biases by computing bias-corrected estimates:
+Since the moments are biased towards zero mostly during the initial time steps, the authors work around these biases by computing bias-corrected estimates:
 \begin{subequations}
 \begin{gather}
 \hat{m}_t=\dfrac{m_t}{1 - \beta^t_1} \\

@@ -3,12 +3,13 @@
 \chapter{Results} \label{ch:results}
 
 As described in Chapter \ref{ch:exp}, two different experiments were
-carried out to evaluate the synthetic signatures generated with our proposed method. Namely, we intend to measure how close the synthetic signatures are to real ones and to verify the feasibility of increasing the enrollment dataset with synthetic signatures. The goal of the experiments are:
+carried out to evaluate the synthetic signatures generated with our proposed method. Namely, we intend to measure how close the synthetic signatures are to real ones and to verify the feasibility of increasing the enrollment dataset with synthetic signatures. 
+
+The goal of the experiments are:
 \begin{itemize}
-  \item Measure the quality of the synthetic images;
-  \item Assess whether using synthetic signatures effects the recognition performance of an offline signature verification system; and
-  \item Analyze the feasibility of using real and synthetic signatures
-  on the enrollment set.
+	\item Measure the quality of the synthetic signatures samples in terms of similarity to real specimens;
+	\item Evaluate if using synthetic signatures affects an offline signature verification system performance; and
+	\item Analyze whether using real or our proposed method synthetic signatures on the enrollment set have similar recognition rates.
 \end{itemize}
 
 We compare our results with a state-of-the-art method, particularly the approach proposed by Diaz \textit{et al.} \cite{diaz2014generation}. Specifically, our proposed method is compared with the ``Image enhanced'' synthetic signatures made available as part of the BiosecurID \cite{biosecurid} dataset. The reported EER is achieved for both approaches in the same experimental conditions.
@@ -85,10 +86,8 @@ Moreover, in Figure \ref{fig:box_exp1} we can see that when running the experime
 \end{figure*}
 
 \section{Feasibility of Synthetically Increasing the Enrollment Samples - Experiment 2}
-In the last experiment, the feasibility of synthetically
-increasing the signature verification enrollment set is analyzed. As it is described in
-Chapter \ref{ch:exp}, three different enrollment sets are considered. The DET curves for the mixed enrollment (real + synthetic, gray dashed line) is shown in Figure \ref{fig:exp2} and the summary of the results is presented in Table \ref{exp2_results_table}. We can observe that a better performance compared to the case with only four real
-enrolled samples (black line). Specifically, the EER decreases from 10.26\% to 9.74\% on the random forgeries scenario and from 21.55\% to 19.17\% for skilled forgeries, respectively. The addition of synthetic samples for training thus leads to better recognition results.
+Figure \ref{fig:exp2} reports DET curves related to the second experiment, results are summarized in Table \ref{exp2_results_table}. EER decreases from 10.26\% to 9.74\% on the random forgeries scenario and from 21.55\% to 19.17\% for skilled forgeries, respectively. We can state that the use synthetic samples for increasing the training set leads to better recognition performance.
+
 \begin{figure}[!htb]
     \centering
     
