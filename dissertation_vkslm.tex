@@ -65,6 +65,7 @@
 \usepackage{graphicx}			% Inclusão de gráficos
 \usepackage{microtype} 			% para melhorias de justificação
 \usepackage{amsmath}
+\usepackage[final]{pdfpages}
 
 % Used to jump to image instead of caption
 \usepackage[all]{hypcap}
@@ -250,9 +251,9 @@
 % com o documento, salve-o como PDF no diretório do seu projeto e substitua todo
 % o conteúdo de implementação deste arquivo pelo comando abaixo:
 %
-% \begin{fichacatalografica}
-%     \includepdf{fig_ficha_catalografica.pdf}
-% \end{fichacatalografica}
+\begin{fichacatalografica}
+     \includepdf{ficha.pdf}
+\end{fichacatalografica}
 
 % ---
 
@@ -265,7 +266,7 @@
 % do trabalho. Após isso, substitua todo o conteúdo deste arquivo por uma
 % imagem da página assinada pela banca com o comando abaixo:
 %
-% \includepdf{folhadeaprovacao_final.pdf}
+\includepdf{aprovacao.pdf}
 %
 
 % ---
